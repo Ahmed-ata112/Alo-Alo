@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "*.excalidraw": "json",
+    "*.excalidrawlib": "json",
+    "*.do": "tcl",
+    "*.v": "systemverilog",
+    "*.h": "cpp",
+    "*.m": "matlab",
+    "vector": "cpp"
+  }
+}

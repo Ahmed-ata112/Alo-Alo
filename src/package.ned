@@ -6,5 +6,15 @@ package alo_alo;
 //
 network Network
 {
+    submodules:
+        sender: Sender {
+            @display("p=63,80");
+        }
+        receiver: Receiver {
+            @display("p=164,77");
+        }
+    connections:
+        sender.out --> receiver.in;
+        receiver.out --> sender.in;
 }
 
