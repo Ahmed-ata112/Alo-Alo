@@ -93,6 +93,7 @@ void Sender::initialize()
     w_next = 0;
     is_processing = false;
     messages = readfile("input0.txt");
+    EV << "messages size: " << messages.size() << "\n";
 }
 
 void Sender::handleMessage(cMessage *msg)
@@ -165,16 +166,20 @@ void Sender::handleMessage(cMessage *msg)
             if (message->getType() == ACK)
             {
                 // this is an ACK
-
                 int ack_num = message->getAck_num();
                 // a correct ACK should havee the second frame's seqNum in the window
                 if (ack_num != (w_start % window_size) + 1)
                     return; // this is a wrong ACK
 
+                EV << "RECEIVED CORRECT ACK with ack_num: " << int(message->getAck_num()) << std::endl;
                 // slide the window
                 w_start++;
-                w_end++;
+                w_end = w_end == messages.size() - 1 ? w_end : w_end + 1;
+
                 // TODO: delete from the timeouts vector
+                // frame is in order  so we can delete the timeout
+                cancelAndDelete(timeouts[0]);
+                timeouts.erase(timeouts.begin());
                 // if the sender is proceessing some frame then we can't send more frames now
                 if (is_processing)
                     return; // the frame will be sent when it finishes processing ISA
@@ -191,6 +196,10 @@ void Sender::handleMessage(cMessage *msg)
     if (w_next >= messages.size())
         return; // we finished sending all the frames
 
+    EV << "w_next: " << w_next << "\n";
+    EV << "w_start: " << w_start << "\n";
+    EV << "w_end: " << w_end << "\n";
+
     // send the message
     cMessage *to_proccessing_msg = new cMessage("to_proccessing_msg");
     to_proccessing_msg->setKind(w_next);
@@ -200,5 +209,5 @@ void Sender::handleMessage(cMessage *msg)
 
     // increment the next frame to be sent
     w_next++;
-//    cancelAndDelete(msg);
+    //    cancelAndDelete(msg);
 }

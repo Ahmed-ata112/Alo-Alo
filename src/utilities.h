@@ -80,12 +80,5 @@ void checksum_message(CustomMessage_Base *msg)
     msg->setTrailer(checksum);
 }
 
-//
-// int main()
-//{
-//    vector<ErroredMsg> messages = readfile("input0.txt");
-//}
-
-
 
 #endif /* UTILITIES_H_ */
