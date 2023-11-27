@@ -6,5 +6,9 @@ package alo_alo;
 //
 network Network
 {
+    submodules:
+        node: Node {
+            @display("p=101,79");
+        }
 }
 

@@ -14,12 +14,22 @@
 // 
 
 #include "node.h"
-
+#include "iostream"
+#include "string"
+#include "vector"
+#include "FileSystem/CoordinatorFileSystem.h"
 Define_Module(Node);
 
 void Node::initialize()
 {
-    // TODO - Generated method body
+    CoordinatorFileSystem fileSystem = CoordinatorFileSystem("coordinator.txt");
+    std::vector<std::string> lines = fileSystem.readFile();
+    for (int i = 0; i < lines.size(); ++i) {
+           std::cout<< lines[i] <<std::endl;
+    }
+
+    CoordinatorFileInfo info = fileSystem.getCoordinatorFileInfo();
+    std::cout<<"info = "<<info.starting_node <<" "<<info.starting_time<<std::endl;
 }
 
 void Node::handleMessage(cMessage *msg)

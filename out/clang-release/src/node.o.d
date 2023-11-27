@@ -1,6 +1,11 @@
 ../out/clang-release/src/node.o: node.cc node.h \
-  D:/academic_material/fourth_year/Networks/labs/omnetpp-6.0.1/include/omnetpp.h
+  D:/Material/4th/first/networks/labs/lab1/omnetpp-5.6.2/include\omnetpp.h \
+  FileSystem/CoordinatorFileSystem.h FileSystem/BaseFileSystem.h
 
 node.h:
 
-D:/academic_material/fourth_year/Networks/labs/omnetpp-6.0.1/include/omnetpp.h:
+D:/Material/4th/first/networks/labs/lab1/omnetpp-5.6.2/include\omnetpp.h:
+
+FileSystem/CoordinatorFileSystem.h:
+
+FileSystem/BaseFileSystem.h:
