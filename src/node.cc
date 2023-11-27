@@ -18,18 +18,35 @@
 #include "string"
 #include "vector"
 #include "FileSystem/CoordinatorFileSystem.h"
+#include "FileSystem/NodeFileSystem.h"
+
 Define_Module(Node);
 
 void Node::initialize()
 {
-    CoordinatorFileSystem fileSystem = CoordinatorFileSystem("coordinator.txt");
+//    CoordinatorFileSystem fileSystem = CoordinatorFileSystem("coordinator.txt");
+//    std::vector<std::string> lines = fileSystem.readFile();
+//    for (int i = 0; i < lines.size(); ++i) {
+//           std::cout<< lines[i] <<std::endl;
+//    }
+//
+//    CoordinatorFileInfo info = fileSystem.getCoordinatorFileInfo();
+//    std::cout<<"info = "<<info.starting_node <<" "<<info.starting_time<<std::endl;
+
+    NodeFileSystem fileSystem = NodeFileSystem("input0.txt");
     std::vector<std::string> lines = fileSystem.readFile();
     for (int i = 0; i < lines.size(); ++i) {
            std::cout<< lines[i] <<std::endl;
     }
 
-    CoordinatorFileInfo info = fileSystem.getCoordinatorFileInfo();
-    std::cout<<"info = "<<info.starting_node <<" "<<info.starting_time<<std::endl;
+    std::vector<MessageInfo> msgsInfo = fileSystem.getMessages();
+    for(int i=0;i<msgsInfo.size();i++){
+        std::cout<<"modification "<<msgsInfo[i].modification
+                <<" loss "<<msgsInfo[i].loss
+                <<" duplication "<<msgsInfo[i].duplication
+                <<" delay "<<msgsInfo[i].delay<<std::endl;
+           std::cout<<msgsInfo[i].modification<<msgsInfo[i].loss<<msgsInfo[i].duplication<<msgsInfo[i].delay<<"message : "<<msgsInfo[i].message<<std::endl;
+    }
 }
 
 void Node::handleMessage(cMessage *msg)
