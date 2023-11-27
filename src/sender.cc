@@ -33,6 +33,8 @@ void Sender::initialize()
     w_start = 0;
     w_end = window_size - 1;
     w_next = 0;
+    is_processing = false;
+    messages = readfile("input0.txt");
 }
 
 void Sender::handleMessage(cMessage *msg)
@@ -61,7 +63,8 @@ void Sender::handleMessage(cMessage *msg)
             {
                 cancelAndDelete(timeouts[i]);
             }
-            timeouts.clear(); // clear the timeouts vector
+            timeouts.clear();      // clear the timeouts vector
+            is_processing = false; // we are not processing any frame now
         }
         else
         {
@@ -73,10 +76,12 @@ void Sender::handleMessage(cMessage *msg)
 
             // schedule a timeout for the frame
             cMessage *timeout = new cMessage("timeout");
+            // time out message at w_num( the frame to be sent)
             timeout->setKind(w_num);
             timeouts.push_back(timeout);
-            // schedule the timeout after the timeeout interval
+            // schedule the timeout after the timeout interval
             scheduleAt(simTime() + TO, timeout);
+            is_processing = false; // we are not processing any frame now
         }
     }
     else
@@ -88,6 +93,7 @@ void Sender::handleMessage(cMessage *msg)
         // and schedule a timeout for it
         if (msg->getName() == "coordinate")
         {
+            // NOTHING TO DO here for now
         }
         else
         {
@@ -103,15 +109,17 @@ void Sender::handleMessage(cMessage *msg)
                 // this is an ACK
 
                 int ack_num = message->getAck_num();
-                if (ack_num != w_start % window_size)
+                // a correct ACK should havee the second frame's seqNum in the window
+                if (ack_num != (w_start % window_size) + 1)
                     return; // this is a wrong ACK
 
                 // slide the window
                 w_start++;
                 w_end++;
                 // TODO: delete from the timeouts vector
-                // if the sender is prooceessing some frame then we can't send more frames now
-                if ()
+                // if the sender is proceessing some frame then we can't send more frames now
+                if (is_processing)
+                    return; // the frame will be sent when it finishes processing ISA
             }
             else
             {
@@ -122,14 +130,17 @@ void Sender::handleMessage(cMessage *msg)
     if (w_next > w_end) // if the pointer reached the end of the window
         return;         // we can't send more frames until we receive ACKs or NACKs from the receiver or a timeout occurs
 
+    if (w_next >= messages.size())
+        return; // we finished sending all the frames
+
     // send the message
     cMessage *to_proccessing_msg = new cMessage("msg");
     to_proccessing_msg->setKind(w_next);
     // send to self after processing time
     scheduleAt(simTime() + PT, to_proccessing_msg);
+    is_processing = true; // we are processing a frame now
 
     // increment the next frame to be sent
     w_next++;
-
     cancelAndDelete(msg);
 }

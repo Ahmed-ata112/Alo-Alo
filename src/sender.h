@@ -34,7 +34,7 @@ class Sender : public cSimpleModule
   // timeouts for each frame in the window
   // we need to keep track of them to cancel them when a frame is received correctly OR a timeout occured and we need to resend the window
   vector<cMessage *> timeouts;
-
+  bool is_processing; // flag to indicate if a frame is being processed
 protected:
   virtual void initialize() override;
   virtual void handleMessage(cMessage *msg) override;
