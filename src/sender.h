@@ -19,7 +19,7 @@
 #include <omnetpp.h>
 
 using namespace omnetpp;
-
+class ErroredMsg;
 /**
  * TODO - Generated class
  */
@@ -29,15 +29,16 @@ class Sender : public cSimpleModule
   int w_start; // first frame in window
   int w_end;   // last frame in window
   int w_next;  // next frame to be sent
-  vector<ErroredMsg> messages;
+  std::vector<ErroredMsg> messages;
 
   // timeouts for each frame in the window
   // we need to keep track of them to cancel them when a frame is received correctly OR a timeout occured and we need to resend the window
-  vector<cMessage *> timeouts;
+  std::vector<cMessage *> timeouts;
   bool is_processing; // flag to indicate if a frame is being processed
 protected:
   virtual void initialize() override;
   virtual void handleMessage(cMessage *msg) override;
+  void send_message_with_error(ErroredMsg message, char seq_num);
 };
 
 #endif

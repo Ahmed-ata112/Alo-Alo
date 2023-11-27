@@ -14,10 +14,16 @@
 //
 
 #include "sender.h"
-#include "utilities.h"
 #include "CustomMessage_m.h"
+#include "utilities.h"
+
+//*
+//* Sender and reciever modules and the coord just choose the input file??
+//* Ack when proccessing?
+//*/
 
 Define_Module(Sender);
+using namespace omnetpp;
 
 #define PT 0.5
 #define TD 0.5
@@ -26,12 +32,64 @@ Define_Module(Sender);
 #define TO 5
 #define ACK 1
 #define NACK 0
+
+void Sender::send_message_with_error(ErroredMsg message, char seq_num)
+{
+
+    if (message.is_lost())
+        return;
+
+    // create message
+    CustomMessage_Base *msg = new CustomMessage_Base();
+    msg->setPayload(message.payload.c_str());
+    frame_message(msg);
+    checksum_message(msg);
+    msg->setHeader(seq_num);
+    msg->setType(0); // data
+
+    int size = message.payload.size();
+
+    // add processing time and transmission delay
+    double total_delay = TD;
+
+    if (message.is_delayed())
+    {
+        // if message is delayed, add extra delay
+        total_delay += ED;
+    }
+
+    if (message.is_modified())
+    {
+        // generate random index for character in payload
+        int index = int(uniform(0, size));
+        // generate random bit to flip in character
+        int bit = uniform(0, 8);
+        // flip the bit
+        message.payload[index] ^= (1 << bit);
+        // set the payload again
+        msg->setPayload(message.payload.c_str());
+    }
+
+    // send the original message
+    EV << "sending message with seq_num: " << int(seq_num) << "\n";
+    sendDelayed(msg, total_delay, "out");
+
+    if (message.is_duplicated())
+    {
+        CustomMessage_Base *duplicated_msg = msg->dup();
+        // add duplication delay
+        total_delay += DD;
+        // send the duplicated message
+        sendDelayed(duplicated_msg, total_delay, "out");
+    }
+}
+
 void Sender::initialize()
 {
     // initialize variables
-    window_size = 4; // par("window_size");
+    window_size = 3; // par("window_size");
     w_start = 0;
-    w_end = window_size - 1;
+    w_end = window_size - 1; // index of last element in window
     w_next = 0;
     is_processing = false;
     messages = readfile("input0.txt");
@@ -46,9 +104,9 @@ void Sender::handleMessage(cMessage *msg)
         // it can be either a timeout or a frame finished processing
 
         // check if it is a timeout
-        if (msg->getName() == "timeout")
+        if (string(msg->getName()) == "timeout")
         {
-
+            EV << "timeout\n";
             // this is a timeout on the first frame in the window
             // resend all frames in the window
 
@@ -72,7 +130,7 @@ void Sender::handleMessage(cMessage *msg)
             // send the frame
             int w_num = msg->getKind();
             // send the frame with the corresponding error
-            send_message_with_error(messages[w_num], w_num % (window_size), TD, ED, DD);
+            send_message_with_error(messages[w_num], w_num % (window_size));
 
             // schedule a timeout for the frame
             cMessage *timeout = new cMessage("timeout");
@@ -91,7 +149,7 @@ void Sender::handleMessage(cMessage *msg)
         // from the coordinator
         // we will send the first frame in the window
         // and schedule a timeout for it
-        if (msg->getName() == "coordinate")
+        if (string(msg->getName()) == "coordinate")
         {
             // NOTHING TO DO here for now
         }
@@ -134,7 +192,7 @@ void Sender::handleMessage(cMessage *msg)
         return; // we finished sending all the frames
 
     // send the message
-    cMessage *to_proccessing_msg = new cMessage("msg");
+    cMessage *to_proccessing_msg = new cMessage("to_proccessing_msg");
     to_proccessing_msg->setKind(w_next);
     // send to self after processing time
     scheduleAt(simTime() + PT, to_proccessing_msg);
@@ -142,5 +200,5 @@ void Sender::handleMessage(cMessage *msg)
 
     // increment the next frame to be sent
     w_next++;
-    cancelAndDelete(msg);
+//    cancelAndDelete(msg);
 }

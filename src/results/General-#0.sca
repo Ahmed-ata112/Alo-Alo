@@ -1,8 +1,8 @@
 version 3
-run General-0-20231127-00:28:20-34244
+run General-0-20231127-12:46:25-8
 attr configname General
-attr datetime 20231127-00:28:20
-attr datetimef 20231127-002820
+attr datetime 20231127-12:46:25
+attr datetimef 20231127-124625
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,7 +10,7 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Network
-attr processid 34244
+attr processid 8
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -20,5 +20,6 @@ config network Network
 
 par Network.sender typename "\"alo_alo.Sender\""
 par Network.receiver typename "\"alo_alo.Receiver\""
+par Network.coordinator typename "\"alo_alo.Coordinator\""
 par Network typename "\"alo_alo.Network\""
 

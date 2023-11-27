@@ -22,5 +22,6 @@ simple Sender
 {
     gates:
         input in;
+        input coord_in;
         output out;
 }

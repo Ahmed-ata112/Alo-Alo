@@ -25,4 +25,5 @@ void Receiver::initialize()
 void Receiver::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
+    EV<<"RECEIVED" <<std::endl;
 }

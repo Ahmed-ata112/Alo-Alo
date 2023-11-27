@@ -6,15 +6,20 @@ package alo_alo;
 //
 network Network
 {
+    @display("bgb=440,242");
     submodules:
         sender: Sender {
             @display("p=63,80");
         }
         receiver: Receiver {
-            @display("p=164,77");
+            @display("p=362,85");
+        }
+        coordinator: Coordinator {
+            @display("p=208,176");
         }
     connections:
         sender.out --> receiver.in;
         receiver.out --> sender.in;
+        coordinator.out --> sender.coord_in;
 }
 
