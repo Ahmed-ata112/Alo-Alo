@@ -22,18 +22,50 @@
 #define LP 0.1 // loss probability of ack and nack
 Define_Module(Receiver);
 
+bool Receiver::loss()
+{
+    return (uniform(0, 1) <= LP);
+}
+
 void Receiver::initialize()
 {
     // TODO - Generated method body
+    seq_num = 0;
 }
 
 void Receiver::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
     CustomMessage_Base *message = check_and_cast<CustomMessage_Base *>(msg);
-    EV << "RECEIVED MSG with seq_num: " << int(message->getHeader()) << std::endl;
 
-    message->setAck_num(int(message->getHeader()) + 1); // correct header
-    message->setType(ACK);                              // ACK
-    sendDelayed(message, TD, "out");
+    // expected message
+    if (message->getHeader() == seq_num)
+    {
+        // no error in the message
+        if (check_checksum(message))
+        {
+            unframing_message(message);
+            message->setAck_num(++seq_num);
+            message->setType(ACK);
+            EV << "received message: " << message->getPayload() << " --> seq_num: " << int(message->getHeader()) << std::endl;
+            if (!loss())
+                sendDelayed(message, TD, "out");
+            else
+                EV_ERROR << "ACK will be lost" << std::endl;
+        }
+        // error in the message
+        else
+        {
+            EV_ERROR << "there is error in the received message -->"
+                     << " seq_num: " << int(message->getHeader()) << std::endl;
+            message->setAck_num(seq_num);
+            message->setType(NACK);
+            if (!loss())
+                sendDelayed(message, TD, "out");
+            else
+                EV_ERROR << "ACK will be lost" << std::endl;
+        }
+    }
+    else
+        EV_ERROR << "received unexpected message with seq_num: " << int(message->getHeader()) << std::endl;
 }
