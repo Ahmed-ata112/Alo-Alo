@@ -41,27 +41,31 @@ void Receiver::handleMessage(cMessage *msg)
     // expected message
     if (message->getHeader() == seq_num)
     {
-        // error in the message -> sent NACK
+        // no error in the message
         if (check_checksum(message))
         {
             unframing_message(message);
             message->setAck_num(++seq_num);
             message->setType(ACK);
-            EV << "RECEIVED MSG with seq_num: " << int(message->getHeader()) << std::endl;
-            EV << "MESSAGE HAS ERROR IN IT" << std::endl;
-            EV_WARN << "HAppy";
+            EV << "received message: " << message->getPayload() << " --> seq_num: " << int(message->getHeader()) << std::endl;
             if (!loss())
                 sendDelayed(message, TD, "out");
+            else
+                EV_ERROR << "ACK will be lost" << std::endl;
         }
-        // no error in the message
+        // error in the message
         else
         {
-            message->setPayload("Error happen in the message");
+            EV_ERROR << "there is error in the received message -->"
+                     << " seq_num: " << int(message->getHeader()) << std::endl;
             message->setAck_num(seq_num);
             message->setType(NACK);
             if (!loss())
                 sendDelayed(message, TD, "out");
+            else
+                EV_ERROR << "ACK will be lost" << std::endl;
         }
     }
-    EV << "RECEIVED MSG with seq_num: " << int(message->getHeader()) << std::endl;
+    else
+        EV_ERROR << "received unexpected message with seq_num: " << int(message->getHeader()) << std::endl;
 }

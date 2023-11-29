@@ -1,0 +1,25 @@
+version 3
+run General-0-20231129-23:07:21-3664
+attr configname General
+attr datetime 20231129-23:07:21
+attr datetimef 20231129-230721
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Network
+attr processid 3664
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Network
+
+par Network.sender typename "\"alo_alo.Sender\""
+par Network.receiver typename "\"alo_alo.Receiver\""
+par Network.coordinator typename "\"alo_alo.Coordinator\""
+par Network typename "\"alo_alo.Network\""
+
