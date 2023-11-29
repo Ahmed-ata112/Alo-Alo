@@ -22,18 +22,46 @@
 #define LP 0.1 // loss probability of ack and nack
 Define_Module(Receiver);
 
+bool Receiver::loss()
+{
+    return (uniform(0, 1) <= LP);
+}
+
 void Receiver::initialize()
 {
     // TODO - Generated method body
+    seq_num = 0;
 }
 
 void Receiver::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
     CustomMessage_Base *message = check_and_cast<CustomMessage_Base *>(msg);
-    EV << "RECEIVED MSG with seq_num: " << int(message->getHeader()) << std::endl;
 
-    message->setAck_num(int(message->getHeader()) + 1); // correct header
-    message->setType(ACK);                              // ACK
-    sendDelayed(message, TD, "out");
+    // expected message
+    if (message->getHeader() == seq_num)
+    {
+        // error in the message -> sent NACK
+        if (check_checksum(message))
+        {
+            unframing_message(message);
+            message->setAck_num(++seq_num);
+            message->setType(ACK);
+            EV << "RECEIVED MSG with seq_num: " << int(message->getHeader()) << std::endl;
+            EV << "MESSAGE HAS ERROR IN IT" << std::endl;
+            EV_WARN << "HAppy";
+            if (!loss())
+                sendDelayed(message, TD, "out");
+        }
+        // no error in the message
+        else
+        {
+            message->setPayload("Error happen in the message");
+            message->setAck_num(seq_num);
+            message->setType(NACK);
+            if (!loss())
+                sendDelayed(message, TD, "out");
+        }
+    }
+    EV << "RECEIVED MSG with seq_num: " << int(message->getHeader()) << std::endl;
 }

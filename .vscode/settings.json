@@ -6,6 +6,8 @@
     "*.v": "systemverilog",
     "*.h": "cpp",
     "*.m": "matlab",
-    "vector": "cpp"
+    "vector": "cpp",
+    "error": "cpp",
+    "fstream": "cpp"
   }
 }

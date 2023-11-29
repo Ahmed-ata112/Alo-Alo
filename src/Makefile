@@ -35,6 +35,7 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc, .msg and .sm files
 OBJS = \
     $O/coordinator.o \
+    $O/ErroredMsg.o \
     $O/node.o \
     $O/receiver.o \
     $O/sender.o \
