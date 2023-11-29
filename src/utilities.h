@@ -80,5 +80,4 @@ void checksum_message(CustomMessage_Base *msg)
     msg->setTrailer(checksum);
 }
 
-
 #endif /* UTILITIES_H_ */

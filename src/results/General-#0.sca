@@ -1,8 +1,8 @@
 version 3
-run General-0-20231129-20:56:59-32844
+run General-0-20231129-23:07:57-16884
 attr configname General
-attr datetime 20231129-20:56:59
-attr datetimef 20231129-205659
+attr datetime 20231129-23:07:57
+attr datetimef 20231129-230757
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,7 +10,55 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Network
-attr processid 32844
+attr processid 16884
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Network
+
+par Network.sender typename "\"alo_alo.Sender\""
+par Network.receiver typename "\"alo_alo.Receiver\""
+par Network.coordinator typename "\"alo_alo.Coordinator\""
+par Network typename "\"alo_alo.Network\""
+
+run General-0-20231129-23:04:04-22036
+attr configname General
+attr datetime 20231129-23:04:04
+attr datetimef 20231129-230404
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Network
+attr processid 22036
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Network
+
+par Network.sender typename "\"alo_alo.Sender\""
+par Network.receiver typename "\"alo_alo.Receiver\""
+par Network.coordinator typename "\"alo_alo.Coordinator\""
+par Network typename "\"alo_alo.Network\""
+
+run General-0-20231129-23:02:05-23496
+attr configname General
+attr datetime 20231129-23:02:05
+attr datetimef 20231129-230205
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Network
+attr processid 23496
 attr repetition 0
 attr replication #0
 attr resultdir results

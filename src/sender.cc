@@ -16,6 +16,7 @@
 #include "sender.h"
 #include "CustomMessage_m.h"
 #include "utilities.h"
+#include "Logger.h"
 
 //*
 //* Sender and reciever modules and the coord just choose the input file??
@@ -84,6 +85,22 @@ void Sender::send_message_with_error(ErroredMsg message, char seq_num)
     }
 }
 
+void Sender::reset_window()
+{
+    // clear errors from the first frame that caused the timeout
+    messages[w_start].clear_errors();
+
+    // reset the next frame to be sent to send the window again from the start
+    w_next = w_start;
+
+    // clear all the timeouts in the event queue
+    for (int i = 0; i < timeouts.size(); i++)
+    {
+        cancelAndDelete(timeouts[i]);
+    }
+    timeouts.clear(); // clear the timeouts vector
+}
+
 void Sender::initialize()
 {
     // initialize variables
@@ -93,6 +110,7 @@ void Sender::initialize()
     w_next = 0;
     is_processing = false;
     messages = readfile("input0.txt");
+    logger = Logger();
     EV << "messages size: " << messages.size() << "\n";
 }
 
@@ -107,12 +125,12 @@ void Sender::handleMessage(cMessage *msg)
     else if (string(msg->getName()) == "to_proccessing_msg")
     {
         EV << "Message finished processing win_num: " << msg->getKind() << "\n";
-        // this is a frame scheduled to be sent now
+        // this is a frame that finished processing and scheduled to be sent now
+
         // send the frame
         int w_num = msg->getKind();
         // send the frame with the corresponding error
         send_message_with_error(messages[w_num], w_num % (window_size + 1));
-
         // schedule a timeout for the frame
         cMessage *timeout = new cMessage("timeout");
         // time out message at w_num( the frame to be sent)
@@ -125,22 +143,11 @@ void Sender::handleMessage(cMessage *msg)
     // check if it is a timeout
     else if (string(msg->getName()) == "timeout")
     {
-        EV << "timeout\n";
         // this is a timeout on the first frame in the window
         // resend all frames in the window
-
-        // clear errors from the first frame that caused the timeout
-        messages[w_start].clear_errors();
-
-        // reset the next frame to be sent to send the window again from the start
-        w_next = w_start;
-
-        // clear all the timeouts in the event queue
-        for (int i = 0; i < timeouts.size(); i++)
-        {
-            cancelAndDelete(timeouts[i]);
-        }
-        timeouts.clear();      // clear the timeouts vector
+        EV << "timeout\n";
+        logger.logTimeoutEvent(0, msg->getKind() % (window_size + 1));
+        reset_window();
         is_processing = false; // we are not processing any frame now
     }
     else
@@ -159,12 +166,11 @@ void Sender::handleMessage(cMessage *msg)
             if (ack_num != (w_start % (window_size + 1)) + 1)
                 return; // this is a wrong ACK
 
-            EV << "RECEIVED CORRECT ACK with ack_num: " << int(message->getAck_num()) << std::endl;
-
+            EV << "RECEIVED CORRECT ACK with ack_num: " << int(ack_num) << std::endl;
             // slide the window
             w_start++;
             // update the end of the window if it is not the last frame
-            w_end = w_end == messages.size() - 1 ? w_end : w_end + 1;
+            w_end = (w_end == messages.size() - 1) ? w_end : w_end + 1;
 
             // TODO: delete from the timeouts vector
             // frame is in order so we can delete the timeout
@@ -184,21 +190,8 @@ void Sender::handleMessage(cMessage *msg)
 
             EV << "NACK with nack_num: " << int(message->getAck_num()) << std::endl;
 
-            // clear errors from the first frame that caused the timeout
-            messages[w_start].clear_errors();
-
-            // reset the next frame to be sent to send the window again from the start
-            w_next = w_start;
-
-            // clear all the timeouts in the event queue
-            for (int i = 0; i < timeouts.size(); i++)
-            {
-                cancelAndDelete(timeouts[i]);
-            }
-            timeouts.clear(); // clear the timeouts vector
-
             if (is_processing)
-                // make it stop processing the current frame and send the frame that caused the NACK
+                // make it stop processing the current frame and Resend the frame that caused the NACK
                 cancelAndDelete(to_proccessing_msg);
         }
     }
@@ -218,7 +211,8 @@ void Sender::handleMessage(cMessage *msg)
     to_proccessing_msg = new cMessage("to_proccessing_msg");
     to_proccessing_msg->setKind(w_next);
     // send to self after processing time
-    scheduleAt(simTime() + PT, to_proccessing_msg);
+    time_to_finish_proccesing = simTime() + PT;
+    scheduleAt(time_to_finish_proccesing, to_proccessing_msg);
     is_processing = true; // we are processing a frame now
 
     // increment the next frame to be sent

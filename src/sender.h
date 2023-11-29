@@ -17,6 +17,7 @@
 #define __ALO_ALO_SENDER_H_
 
 #include <omnetpp.h>
+#include "Logger.h"
 
 using namespace omnetpp;
 class ErroredMsg;
@@ -29,6 +30,7 @@ class Sender : public cSimpleModule
   int w_start; // first frame in window
   int w_end;   // last frame in window
   int w_next;  // next frame to be sent
+  Logger logger;
   std::vector<ErroredMsg> messages;
 
   // timeouts for each frame in the window
@@ -36,10 +38,13 @@ class Sender : public cSimpleModule
   std::vector<cMessage *> timeouts;
   bool is_processing;           // flag to indicate if a frame is being processed
   cMessage *to_proccessing_msg; // the message being processed
+  simtime_t time_to_finish_proccesing;
+
 protected:
   virtual void initialize() override;
   virtual void handleMessage(cMessage *msg) override;
   void send_message_with_error(ErroredMsg message, char seq_num);
+  void reset_window();
 };
 
 #endif
