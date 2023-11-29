@@ -37,9 +37,6 @@ using namespace omnetpp;
 void Sender::send_message_with_error(ErroredMsg message, char seq_num)
 {
 
-    if (message.is_lost())
-        return;
-
     // create message
     CustomMessage_Base *msg = new CustomMessage_Base();
     msg->setPayload(message.payload.c_str());
@@ -58,7 +55,8 @@ void Sender::send_message_with_error(ErroredMsg message, char seq_num)
         // if message is delayed, add extra delay
         total_delay += ED;
     }
-
+    int index;
+    int bit;
     if (message.is_modified())
     {
         // generate random index for character in payload
@@ -73,6 +71,14 @@ void Sender::send_message_with_error(ErroredMsg message, char seq_num)
 
     // send the original message
     EV << "sending message with seq_num: " << int(seq_num) << "\n";
+
+    logger.logFrameTransmission(0, seq_num, msg->getPayload(), msg->getTrailer(),
+                                message.is_modified() ? index * 8 + bit : -1,
+                                message.is_lost(), message.is_duplicated() ? 1 : 0, message.is_delayed() ? ED : 0);
+
+    if (message.is_lost()) // the message lost
+        return;
+
     sendDelayed(msg, total_delay, "out");
 
     if (message.is_duplicated())
@@ -81,6 +87,9 @@ void Sender::send_message_with_error(ErroredMsg message, char seq_num)
         // add duplication delay
         total_delay += DD;
         // send the duplicated message
+        logger.logFrameTransmission(0, seq_num, duplicated_msg->getPayload(), duplicated_msg->getTrailer(),
+                                    message.is_modified() ? index * 8 + bit : -1,
+                                    message.is_lost(), 2, message.is_delayed() ? ED : 0);
         sendDelayed(duplicated_msg, total_delay, "out");
     }
 }
@@ -207,6 +216,7 @@ void Sender::handleMessage(cMessage *msg)
     EV << "w_start: " << w_start << "\n";
     EV << "w_end: " << w_end << "\n";
 
+    logger.logProcessingStart(0, messages[w_next].get_error_code());
     // send the message
     to_proccessing_msg = new cMessage("to_proccessing_msg");
     to_proccessing_msg->setKind(w_next);

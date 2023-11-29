@@ -17,7 +17,8 @@
 #define __ALO_ALO_RECEIVER_H_
 #include "utilities.h"
 #include <omnetpp.h>
-
+#include "Logger.h"
+  
 using namespace omnetpp;
 
 /**
@@ -27,6 +28,7 @@ class Receiver : public cSimpleModule
 {
   char seq_num;
   bool loss();
+  Logger logger;
 
 protected:
   virtual void initialize() override;

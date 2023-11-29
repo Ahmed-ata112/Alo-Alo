@@ -25,12 +25,12 @@ class Logger
 public:
     Logger();
     ~Logger();
-    void logProcessingStart(int node_id, char error_code);
+    void logProcessingStart(int node_id, string error_code);
     void logFrameTransmission(int node_id, int seq_num,
                               const std::string &payload, char trailer, int modified,
-                              char lost, int delay);
+                              bool lost, int dup, int delay);
     void logTimeoutEvent(int node_id, int seq_num);
-    void logControlFrameSending(int node_id, char ack_nack, char loss);
+    void logControlFrameSending(int node_id, bool ack_nack, bool loss);
     void logPayloadUploading(int seq_num, const std::string &payload);
 };
 

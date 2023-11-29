@@ -20,6 +20,8 @@
 #define NACK 0
 #define TD 0.5
 #define LP 0.1 // loss probability of ack and nack
+#define WS 3   // window size
+
 Define_Module(Receiver);
 
 bool Receiver::loss()
@@ -31,6 +33,7 @@ void Receiver::initialize()
 {
     // TODO - Generated method body
     seq_num = 0;
+    logger = Logger();
 }
 
 void Receiver::handleMessage(cMessage *msg)
@@ -48,10 +51,17 @@ void Receiver::handleMessage(cMessage *msg)
             message->setAck_num(++seq_num);
             message->setType(ACK);
             EV << "received message: " << message->getPayload() << " --> seq_num: " << int(message->getHeader()) << std::endl;
+            logger.logPayloadUploading(message->getHeader(), message->getPayload());
+            logger.logControlFrameSending(1, true, loss());
+
             if (!loss())
                 sendDelayed(message, TD, "out");
             else
                 EV_ERROR << "ACK will be lost" << std::endl;
+
+            // if the window is full, reset the seq_num
+            if (seq_num == WS + 1)
+                seq_num = 0;
         }
         // error in the message
         else
@@ -60,6 +70,7 @@ void Receiver::handleMessage(cMessage *msg)
                      << " seq_num: " << int(message->getHeader()) << std::endl;
             message->setAck_num(seq_num);
             message->setType(NACK);
+            logger.logControlFrameSending(1, false, loss());
             if (!loss())
                 sendDelayed(message, TD, "out");
             else

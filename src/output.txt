@@ -1,0 +1,63 @@
+At time [1.000000] starting processing, Node[0], Introducing channel error with code [0001].
+At time [1.500000] starting sending frame with seq_num=[0] and payload=[A flower, sometimes ] and trailer=[-59], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [5].
+At time [1.500000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [2.000000] starting sending frame with seq_num=[1] and payload=[known as a bloom or blossm in flowering plants] and trailer=[-108], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [2.000000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [2.500000] starting sending frame with seq_num=[2] and payload=[is the reproductive$ structure found  also cal,ed/ angiosperms$).] and trailer=[-24], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+Time out event at time [6.500000], at Node[0] for frame with seq_num=[0].
+At time [6.500000] starting processing, Node[0], Introducing channel error with code [0001].
+Uploading payload=[A flower, sometimes ] and seq_num=[0] to the network layer.
+At time [7.000000] Node[1] Sending [ACK] with loss [NO].
+At time [7.000000] starting sending frame with seq_num=[0] and payload=[A flower, sometimes ] and trailer=[-59], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [7.000000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [7.500000] starting sending frame with seq_num=[1] and payload=[known as a bloom or bloss/m in flowering plants] and trailer=[-108], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [7.500000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [8.000000] Node[1] Sending [NACK] with loss [NO].
+At time [8.000000] starting sending frame with seq_num=[2] and payload=[is the reproductive$ structure found  alsg called/ angiosperms$).] and trailer=[-24], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [8.000000] starting processing, Node[0], Introducing channel error with code [0100].
+Time out event at time [12.500000], at Node[0] for frame with seq_num=[1].
+At time [12.500000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [13.000000] starting sending frame with seq_num=[1] and payload=[known as a bloom or blossom in flowering plants] and trailer=[-108], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [13.000000] starting processing, Node[0], Introducing channel error with code [1000].
+Uploading payload=[known as a bloom or blossom in flowering plants] and seq_num=[1] to the network layer.
+At time [13.500000] Node[1] Sending [ACK] with loss [NO].
+At time [13.500000] starting sending frame with seq_num=[2] and payload=[is the reproductive$ structure found  also called/ angiosqerms$).] and trailer=[-24], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [13.500000] starting processing, Node[0], Introducing channel error with code [0100].
+At time [14.000000] Node[1] Sending [NACK] with loss [NO].
+At time [14.000000] starting sending frame with seq_num=[3] and payload=[(plants of the division Magnoliophyta,  is to facilitate reproduction,] and trailer=[-41], Modified [-1], Lost [Yes], Duplicate [0] ,  Delay [0].
+At time [14.000000] starting processing, Node[0], Introducing channel error with code [0010].
+Time out event at time [18.500000], at Node[0] for frame with seq_num=[2].
+At time [18.500000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [19.000000] starting sending frame with seq_num=[2] and payload=[is the reproductive/$ structure found  also called// angiosperms/$).] and trailer=[-24], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [19.000000] starting processing, Node[0], Introducing channel error with code [0100].
+Uploading payload=[is the reproductive$ structure found  also called// angiosperms$).] and seq_num=[2] to the network layer.
+At time [19.500000] Node[1] Sending [ACK] with loss [NO].
+At time [19.500000] starting sending frame with seq_num=[3] and payload=[(plants of the division Magnoliophyta,  is to facilitate reproduction,] and trailer=[-41], Modified [-1], Lost [Yes], Duplicate [0] ,  Delay [0].
+At time [19.500000] starting processing, Node[0], Introducing channel error with code [0010].
+At time [20.000000] starting sending frame with seq_num=[0] and payload=[The biological function of /$//a flower  ] and trailer=[-27], Modified [-1], Lost [NO], Duplicate [1] ,  Delay [0].
+At time [20.000000] starting sending frame with seq_num=[0] and payload=[The biological function of /$//a flower  ] and trailer=[-27], Modified [-1], Lost [NO], Duplicate [2] ,  Delay [0].
+At time [20.000000] starting processing, Node[0], Introducing channel error with code [0100].
+At time [20.500000] starting sending frame with seq_num=[1] and payload=[usually by providing a mechanism for Flowers may facilitate outcrossing/$] and trailer=[-20], Modified [-1], Lost [Yes], Duplicate [0] ,  Delay [0].
+Time out event at time [24.500000], at Node[0] for frame with seq_num=[3].
+At time [24.500000] starting processing, Node[0], Introducing channel error with code [0100].
+At time [25.000000] starting sending frame with seq_num=[3] and payload=[(plants of the division Magnoliophyta,  is to facilitate reproduction,] and trailer=[-41], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [25.000000] starting processing, Node[0], Introducing channel error with code [0010].
+Uploading payload=[(plants of the division Magnoliophyta,  is to facilitate reproduction,] and seq_num=[3] to the network layer.
+At time [25.500000] Node[1] Sending [ACK] with loss [NO].
+At time [25.500000] starting sending frame with seq_num=[0] and payload=[The biological function of /$//a flower  ] and trailer=[-27], Modified [-1], Lost [NO], Duplicate [1] ,  Delay [0].
+At time [25.500000] starting sending frame with seq_num=[0] and payload=[The biological function of /$//a flower  ] and trailer=[-27], Modified [-1], Lost [NO], Duplicate [2] ,  Delay [0].
+At time [25.500000] starting processing, Node[0], Introducing channel error with code [0100].
+Uploading payload=[The biological function of $//a flower  ] and seq_num=[0] to the network layer.
+At time [26.000000] Node[1] Sending [ACK] with loss [NO].
+At time [26.000000] starting sending frame with seq_num=[1] and payload=[usually by providing a mechanism for Flowers may facilitate outcrossing/$] and trailer=[-20], Modified [-1], Lost [Yes], Duplicate [0] ,  Delay [0].
+At time [26.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [26.500000] starting sending frame with seq_num=[2] and payload=[/$/$the union of sperm with eggs.] and trailer=[-97], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+Time out event at time [31.000000], at Node[0] for frame with seq_num=[1].
+At time [31.000000] starting processing, Node[0], Introducing channel error with code [0100].
+At time [31.500000] starting sending frame with seq_num=[1] and payload=[usually by providing a mechanism for Flowers may facilitate outcrossing/$] and trailer=[-20], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [31.500000] starting processing, Node[0], Introducing channel error with code [0000].
+Uploading payload=[usually by providing a mechanism for Flowers may facilitate outcrossing$] and seq_num=[1] to the network layer.
+At time [32.000000] Node[1] Sending [ACK] with loss [NO].
+At time [32.000000] starting sending frame with seq_num=[2] and payload=[/$/$the union of sperm with eggs.] and trailer=[-97], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+Uploading payload=[$$the union of sperm with eggs.] and seq_num=[2] to the network layer.
+At time [32.500000] Node[1] Sending [ACK] with loss [NO].
