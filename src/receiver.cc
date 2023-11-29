@@ -19,7 +19,7 @@
 #define ACK 1
 #define NACK 0
 #define TD 0.5
-
+#define LP 0.1 // loss probability of ack and nack
 Define_Module(Receiver);
 
 void Receiver::initialize()
