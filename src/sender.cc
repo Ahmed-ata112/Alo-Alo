@@ -26,13 +26,15 @@
 Define_Module(Sender);
 using namespace omnetpp;
 
-#define PT 0.5
-#define TD 0.5
-#define ED 5
-#define DD 0.5
-#define TO 5
-#define ACK 1
-#define NACK 0
+void Sender::init()
+{
+    window_size = par("WS").doubleValue();
+    TO = par("TO").doubleValue();
+    PT = par("PT").doubleValue();
+    TD = par("TD").doubleValue();
+    ED = par("ED").doubleValue();
+    DD = par("DD").doubleValue();
+}
 
 void Sender::send_message_with_error(ErroredMsg message, char seq_num)
 {
@@ -112,13 +114,13 @@ void Sender::reset_window()
 
 void Sender::initialize()
 {
+    std::string file = std::to_string(getIndex());
     // initialize variables
-    window_size = 3; // par("window_size");
     w_start = 0;
     w_end = window_size - 1; // index of last element in window
     w_next = 0;
     is_processing = false;
-    messages = readfile("input0.txt");
+    messages = readfile("input" + file + ".txt");
     logger = Logger();
     EV << "messages size: " << messages.size() << "\n";
 }
@@ -166,7 +168,7 @@ void Sender::handleMessage(cMessage *msg)
         // if it is NACK, we will resend the frame
 
         CustomMessage_Base *message = check_and_cast<CustomMessage_Base *>(msg);
-        if (message->getType() == ACK)
+        if (message->getType() == control_signal::ACK)
         {
             EV << "ACK in sender\n";
             // this is an ACK
@@ -189,7 +191,7 @@ void Sender::handleMessage(cMessage *msg)
             if (is_processing)
                 return; // the frame will be sent when it finishes processing ISA
         }
-        else if (message->getType() == NACK)
+        else if (message->getType() == control_signal::NACK)
         {
             EV << "NACK in sender\n";
             // check if the NACK is for the first frame in the window or not

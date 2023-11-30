@@ -16,22 +16,19 @@
 #include "receiver.h"
 #include "CustomMessage_m.h"
 
-#define ACK 1
-#define NACK 0
-#define TD 0.5
-#define LP 0.1 // loss probability of ack and nack
-#define WS 3   // window size
-
 Define_Module(Receiver);
 
-bool Receiver::loss()
+void Receiver::init()
 {
-    return (uniform(0, 1) <= LP);
+    TD = par("TD").doubleValue();
+    LP = par("LP").doubleValue();
+    window_size = par("WS").doubleValue();
 }
 
 void Receiver::initialize()
 {
     // TODO - Generated method body
+    init();
     seq_num = 0;
     logger = Logger();
 }
@@ -49,18 +46,18 @@ void Receiver::handleMessage(cMessage *msg)
         {
             unframing_message(message);
             message->setAck_num(++seq_num);
-            message->setType(ACK);
+            message->setType(control_signal::ACK);
             EV << "received message: " << message->getPayload() << " --> seq_num: " << int(message->getHeader()) << std::endl;
             logger.logPayloadUploading(message->getHeader(), message->getPayload());
-            logger.logControlFrameSending(1, true, loss());
+            logger.logControlFrameSending(1, true, (uniform(0, 1) <= LP));
 
-            if (!loss())
+            if (!(uniform(0, 1) <= LP))
                 sendDelayed(message, TD, "out");
             else
                 EV_ERROR << "ACK will be lost" << std::endl;
 
             // if the window is full, reset the seq_num
-            if (seq_num == WS + 1)
+            if (seq_num == window_size + 1)
                 seq_num = 0;
         }
         // error in the message
@@ -69,9 +66,9 @@ void Receiver::handleMessage(cMessage *msg)
             EV_ERROR << "there is error in the received message -->"
                      << " seq_num: " << int(message->getHeader()) << std::endl;
             message->setAck_num(seq_num);
-            message->setType(NACK);
-            logger.logControlFrameSending(1, false, loss());
-            if (!loss())
+            message->setType(control_signal::NACK);
+            logger.logControlFrameSending(1, false, (uniform(0, 1) <= LP));
+            if (!(uniform(0, 1) <= LP))
                 sendDelayed(message, TD, "out");
             else
                 EV_ERROR << "ACK will be lost" << std::endl;

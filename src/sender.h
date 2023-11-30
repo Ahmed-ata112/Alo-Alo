@@ -26,6 +26,13 @@ class ErroredMsg;
  */
 class Sender : public cSimpleModule
 {
+private:
+  float PT;
+  float TD;
+  float ED;
+  float DD;
+  float TO;
+
   int window_size;
   int w_start; // first frame in window
   int w_end;   // last frame in window
@@ -39,6 +46,8 @@ class Sender : public cSimpleModule
   bool is_processing;           // flag to indicate if a frame is being processed
   cMessage *to_proccessing_msg; // the message being processed
   simtime_t time_to_finish_proccesing;
+
+  void init();
 
 protected:
   virtual void initialize() override;

@@ -20,6 +20,13 @@ package alo_alo;
 //
 simple Sender
 {
+    parameters:
+    	int WS = default(3);
+        double TO = default(10);
+        double PT = default(0.5);
+        double TD = default(1.0);
+        double ED = default(4.0);
+        double DD = default(0.1);    
     gates:
         input in;
         input coord_in;

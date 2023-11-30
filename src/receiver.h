@@ -18,17 +18,25 @@
 #include "utilities.h"
 #include <omnetpp.h>
 #include "Logger.h"
-  
+
 using namespace omnetpp;
 
 /**
  * TODO - Generated class
  */
+// #define TD 0.5
+// #define LP 0.1 // loss probability of ack and nack
+// #define WS 3   // window size
 class Receiver : public cSimpleModule
 {
+private:
+  float TD;
+  float LP;
+  int window_size;
   char seq_num;
-  bool loss();
   Logger logger;
+
+  void init();
 
 protected:
   virtual void initialize() override;

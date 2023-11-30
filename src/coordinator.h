@@ -26,7 +26,7 @@ using namespace omnetpp;
 class Coordinator : public cSimpleModule
 {
   bool node_id;
-  int starting_time;
+  float starting_time;
 
 protected:
   virtual void initialize() override;

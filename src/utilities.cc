@@ -80,7 +80,7 @@ bool check_checksum(CustomMessage_Base *msg)
     return (msg->getTrailer() == checksum);
 }
 
-void coordinator_init(string path, bool &node_id, int &starting_time)
+void coordinator_init(string path, bool &node_id, float &starting_time)
 {
     ifstream file(path);
     file >> node_id >> starting_time;

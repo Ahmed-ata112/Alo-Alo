@@ -20,6 +20,12 @@
 
 using namespace std;
 
+enum control_signal
+{
+    NACK,
+    ACK
+};
+
 vector<ErroredMsg> readfile(string path);
 
 void frame_message(CustomMessage_Base *msg);
@@ -30,6 +36,6 @@ void unframing_message(CustomMessage_Base *msg);
 
 bool check_checksum(CustomMessage_Base *msg);
 
-void coordinator_init(string path, bool &node_id, int &starting_time);
+void coordinator_init(string path, bool &node_id, float &starting_time);
 
 #endif /* UTILITIES_H_ */

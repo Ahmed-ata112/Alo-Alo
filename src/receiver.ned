@@ -20,6 +20,11 @@ package alo_alo;
 //
 simple Receiver
 {
+    parameters:
+    	int WS = default(3);
+        double TD = default(1.0);
+        double LP = default(0);
+    
    gates:
         input in;
         input coord_in; 
