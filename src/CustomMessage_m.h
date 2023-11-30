@@ -111,3 +111,4 @@ template<> inline CustomMessage_Base *fromAnyPtr(any_ptr ptr) { return check_and
 }  // namespace omnetpp
 
 #endif // ifndef __CUSTOMMESSAGE_M_H
+

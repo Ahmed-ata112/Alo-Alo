@@ -22,5 +22,6 @@ simple Receiver
 {
    gates:
         input in;
+        input coord_in; 
         output out;
 }

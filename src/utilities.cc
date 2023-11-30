@@ -16,6 +16,7 @@ vector<ErroredMsg> readfile(string path)
         ErroredMsg msg(str);
         Messages.push_back(msg);
     }
+    file.close();
     return Messages;
 }
 
@@ -77,4 +78,11 @@ bool check_checksum(CustomMessage_Base *msg)
     }
     checksum = ~checksum;
     return (msg->getTrailer() == checksum);
+}
+
+void coordinator_init(string path, bool &node_id, int &starting_time)
+{
+    ifstream file(path);
+    file >> node_id >> starting_time;
+    file.close();
 }

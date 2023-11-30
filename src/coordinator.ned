@@ -21,5 +21,5 @@ package alo_alo;
 simple Coordinator
 {
     gates:
-        output out;
+        output out[2];
 }

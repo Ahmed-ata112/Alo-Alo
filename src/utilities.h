@@ -30,4 +30,6 @@ void unframing_message(CustomMessage_Base *msg);
 
 bool check_checksum(CustomMessage_Base *msg);
 
+void coordinator_init(string path, bool &node_id, int &starting_time);
+
 #endif /* UTILITIES_H_ */

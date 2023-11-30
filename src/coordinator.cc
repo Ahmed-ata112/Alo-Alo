@@ -3,30 +3,30 @@
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 #include "coordinator.h"
+#include "utilities.h"
 
 Define_Module(Coordinator);
-
-#define START_DELAY 1
 
 void Coordinator::initialize()
 {
     // TODO - Generated method body
-    scheduleAt(simTime() + START_DELAY, new cMessage("coordinate"));
+    coordinator_init("coordinator.txt", node_id, starting_time);
+    scheduleAt(simTime() + starting_time, new cMessage("coordinate"));
 }
 
 void Coordinator::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
-    send(msg,"out");
+    send(msg, "out", node_id);
 }
