@@ -80,13 +80,13 @@ void Logger::logTimeoutEvent(int node_id, int seq_num)
     log_file.close();
 }
 
-void Logger::logControlFrameSending(int node_id, bool ack_nack, bool loss)
+void Logger::logControlFrameSending(int node_id, bool ack_nack, int ack_num, bool loss)
 {
     log_file.open("output.txt", std::ios::out | std::ios::app);
 
     // log_file << "At time [" << (simTime().dbl()) << "] Node[" << node_id << "] Sending [" << (ack_nack ? "ACK" : "NACK") << "] with loss [" << (loss ? "YES" : "NO") << "].";
 
-    string msg = "At time [" + std::to_string(simTime().dbl()) + "] Node[" + std::to_string(node_id) + "] Sending [" + (ack_nack ? "ACK" : "NACK") + "] with loss [" + (loss ? "YES" : "NO") + "].";
+    string msg = "At time [" + std::to_string(simTime().dbl()) + "] Node[" + std::to_string(node_id) + "] Sending [" + (ack_nack ? "ACK" : "NACK") + "] with number [" + std::to_string(ack_num )+ "] with loss [" + (loss ? "YES" : "NO") + "].";
     EV << msg << endl;
     log_file << msg << endl;
 

@@ -30,7 +30,7 @@ public:
                               const std::string &payload, char trailer, int modified,
                               bool lost, int dup, int delay);
     void logTimeoutEvent(int node_id, int seq_num);
-    void logControlFrameSending(int node_id, bool ack_nack, bool loss);
+    void logControlFrameSending(int node_id, bool ack_nack, int ack_num, bool loss);
     void logPayloadUploading(int seq_num, const std::string &payload);
 };
 

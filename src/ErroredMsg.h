@@ -13,7 +13,6 @@ class ErroredMsg
 {
 public:
     string payload;
-    string error_code;
     vector<bool> errors;
     ErroredMsg(string line);
     //[Modification, Loss, Duplication, Delay]

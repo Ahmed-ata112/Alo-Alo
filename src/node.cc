@@ -23,6 +23,7 @@ Define_Module(Node);
 void Node::initialize()
 {
     // TODO - Generated method body
+
     // -------------------------receiver----------------------------
     LP = par("LP").doubleValue() / 100;
     seq_num = 0;
@@ -32,18 +33,21 @@ void Node::initialize()
     TD = par("TD").doubleValue();
     ED = par("ED").doubleValue();
     DD = par("DD").doubleValue();
+    window_size = par("WS").intValue();
 
-    // initialize variables
+    // initialize variables for sender
     w_start = 0;
     w_end = window_size - 1; // index of last element in window
     w_next = 0;
     is_processing = false;
 
     // ----------------------- both -------------------------------
-    window_size = par("WS").intValue();
+
     TD = par("TD").doubleValue();
     logger = Logger();
     is_receiver = true;
+
+
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -101,7 +105,7 @@ void Node::handleMessage_receiver(cMessage *msg)
             message->setType(control_signal::ACK);
             EV << "received message: " << message->getPayload() << " --> seq_num: " << int(message->getHeader()) << std::endl;
             logger.logPayloadUploading(message->getHeader(), message->getPayload());
-            logger.logControlFrameSending(1, true, is_lost);
+            logger.logControlFrameSending(1, true, seq_num, is_lost);
 
             if (!is_lost)
                 sendDelayed(message, TD, "out");
@@ -119,11 +123,11 @@ void Node::handleMessage_receiver(cMessage *msg)
                      << " seq_num: " << int(message->getHeader()) << std::endl;
             message->setAck_num(seq_num);
             message->setType(control_signal::NACK);
-            logger.logControlFrameSending(1, false, is_lost);
+            logger.logControlFrameSending(1, false, seq_num, is_lost);
             if (!is_lost)
                 sendDelayed(message, TD, "out");
             else
-                EV_ERROR << "ACK will be lost" << std::endl;
+                EV_ERROR << "NACK will be lost" << std::endl;
         }
     }
     else
@@ -259,9 +263,9 @@ void Node::send_message_with_error(ErroredMsg message, char seq_num)
     if (message.is_modified())
     {
         // generate random index for character in payload
-        int index = int(uniform(0, size));
+        index = int(uniform(0, size));
         // generate random bit to flip in character
-        int bit = uniform(0, 8);
+        bit = uniform(0, 8);
         // flip the bit
         message.payload[index] ^= (1 << bit);
         // set the payload again
