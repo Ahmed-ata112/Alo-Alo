@@ -63,7 +63,7 @@ protected:
   void handleMessage_sender(cMessage *msg);
   void send_message_with_error(ErroredMsg message, char seq_num);
   void reset_window();
-  int ack_distance_from_start(int ack_num);
+  int ack_distance_from_start(int ack_num, bool is_nack);
   // node member functions
   virtual void initialize() override;
   virtual void handleMessage(cMessage *msg) override;

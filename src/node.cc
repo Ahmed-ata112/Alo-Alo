@@ -133,17 +133,17 @@ void Node::handleMessage_receiver(cMessage *msg)
         EV_ERROR << "received unexpected message with seq_num: " << int(message->getHeader()) << std::endl;
 }
 
-int Node::ack_distance_from_start(int ack_num)
+int Node::ack_distance_from_start(int ack_num, bool is_nack = false)
 {
     int max_seq_num = window_size + 1;
-    int win_start = (w_start + 1) % (max_seq_num);
-    int win_end = (w_end + 1) % (max_seq_num);
+    int win_start = (w_start + is_nack ? 0 : 1) % (max_seq_num);
+    int win_end = (w_end + is_nack ? 0 : 1) % (max_seq_num);
     // 1 2 3
     if ((win_start <= win_end && ack_num >= win_start && ack_num <= win_end) ||
         (win_start > win_end && (ack_num >= win_start || ack_num <= win_end)))
     {
         // ACK is within the window
-        int distance = (ack_num - (win_start - 1) + max_seq_num) % max_seq_num;
+        int distance = (ack_num - (win_start - (is_nack ? 0 : 1)) + max_seq_num) % max_seq_num;
         return distance;
     }
     else
@@ -201,9 +201,9 @@ void Node::handleMessage_sender(cMessage *msg)
             // a correct ACK should have a future num in the seq
             // TODO: implement in between function OR
             int d_ack = ack_distance_from_start(ack_num);
-            if (d_ack < 0)
+            if (d_ack <= 0)
             {
-                return;
+                return; // this is an ack from the past
             }
 
             // if (ack_num < ((w_start + 1) % (window_size + 1)))
@@ -217,8 +217,13 @@ void Node::handleMessage_sender(cMessage *msg)
 
             // TODO: delete from the timeouts vector
             // frame is in order so we can delete the timeout
-            cancelAndDelete(timeouts[0]);
-            timeouts.erase(timeouts.begin());
+
+            // delete the all acked frames
+            for (int i = 0; i < d_ack; i++)
+            {
+                cancelAndDelete(timeouts[0]);
+                timeouts.erase(timeouts.begin());
+            }
 
             // if the sender is proceessing some frame then we can't send more frames now
             if (is_processing)
@@ -229,8 +234,25 @@ void Node::handleMessage_sender(cMessage *msg)
             EV << "NACK in sender\n";
             // check if the NACK is for the first frame in the window or not
             int nack_num = message->getAck_num();
-            if (nack_num != w_start % (window_size + 1))
-                return; // this is a wrong NACK
+
+            int d_ack = ack_distance_from_start(nack_num, true);
+            if (d_ack < 0)
+                return; // this is a wrong NACK from the past
+
+            // This is an Accumulative nack
+            w_start += d_ack;
+            // update the end of the window if it is not the last frame
+            w_end = (w_end + d_ack > messages.size() - 1) ? messages.size() - 1 : w_end + d_ack;
+
+            // TODO: delete from the timeouts vector
+            // frame is in order so we can delete the timeout
+
+            // delete the all acked frames
+            for (int i = 0; i < d_ack; i++)
+            {
+                cancelAndDelete(timeouts[0]);
+                timeouts.erase(timeouts.begin());
+            }
 
             EV << "NACK with nack_num: " << int(message->getAck_num()) << std::endl;
             reset_window();
@@ -337,6 +359,8 @@ void Node::reset_window()
     timeouts.clear(); // clear the timeouts vector
 
     if (is_processing)
-        // make it stop processing the current frame and Resend the frame that caused the NACK or the timeout
+    { // make it stop processing the current frame and Resend the frame that caused the NACK or the timeout
         cancelAndDelete(to_proccessing_msg);
+        is_processing = false;
+    }
 }
