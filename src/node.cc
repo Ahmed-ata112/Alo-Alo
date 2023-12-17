@@ -25,7 +25,7 @@ void Node::initialize()
     // TODO - Generated method body
 
     // -------------------------receiver----------------------------
-    LP = par("LP").doubleValue() / 100;
+    LP = par("LP").doubleValue();
     seq_num = 0;
     // ------------------------ sender -----------------------------
     TO = par("TO").doubleValue();
@@ -46,8 +46,6 @@ void Node::initialize()
     TD = par("TD").doubleValue();
     logger = Logger();
     is_receiver = true;
-
-
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -94,7 +92,8 @@ void Node::handleMessage_receiver(cMessage *msg)
     CustomMessage_Base *message = check_and_cast<CustomMessage_Base *>(msg);
 
     // expected message
-    bool is_lost = (uniform(0, 1) <= LP);
+    double ee = uniform(0, 1);
+    bool is_lost = ( ee <= LP);
     if (message->getHeader() == seq_num)
     {
         // no error in the message
@@ -118,7 +117,7 @@ void Node::handleMessage_receiver(cMessage *msg)
         }
         // error in the message
         else
-        {
+        {`````````
             EV_ERROR << "there is error in the received message -->"
                      << " seq_num: " << int(message->getHeader()) << std::endl;
             message->setAck_num(seq_num);
