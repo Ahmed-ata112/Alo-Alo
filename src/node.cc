@@ -26,14 +26,14 @@ void Node::initialize()
 
     // -------------------------receiver----------------------------
     LP = par("LP").doubleValue();
-    seq_num = 0;
+    expected_seq_num = 0;
     // ------------------------ sender -----------------------------
     TO = par("TO").doubleValue();
     PT = par("PT").doubleValue();
     TD = par("TD").doubleValue();
     ED = par("ED").doubleValue();
     DD = par("DD").doubleValue();
-    window_size = par("WS").intValue();
+    window_size = par("WS").intValue(); // 3 by default
 
     // initialize variables for sender
     w_start = 0;
@@ -50,11 +50,13 @@ void Node::initialize()
 
 void Node::handleMessage(cMessage *msg)
 {
-    // from the coordinator
+    // This message is from the coordinator
+    // I'am the Sender now
     if (string(msg->getName()) == "coordinate")
     {
+        // the message comes to the sender
         is_receiver = false;
-        // read from the file
+        // read from the file and load messages
         std::string file = std::to_string(getIndex());
         messages = readfile("input" + file + ".txt");
         EV << "messages size: " << messages.size() << "\n";
@@ -64,20 +66,19 @@ void Node::handleMessage(cMessage *msg)
         EV << "w_end: " << w_end << "\n";
 
         logger.logProcessingStart(0, messages[w_next].get_error_code());
-        // send the message
+        // send the message at the first begining
         to_proccessing_msg = new cMessage("to_proccessing_msg");
         to_proccessing_msg->setKind(w_next);
         // send to self after processing time
         time_to_finish_proccesing = simTime() + PT;
         scheduleAt(time_to_finish_proccesing, to_proccessing_msg);
         is_processing = true; // we are processing a frame now
-
         // increment the next frame to be sent
         w_next++;
     }
     else
     {
-        // TODO - Generated method body
+        // act as a receiver or sender now
         if (is_receiver)
             handleMessage_receiver(msg);
         else
@@ -91,20 +92,21 @@ void Node::handleMessage_receiver(cMessage *msg)
     // TODO - Generated method body
     CustomMessage_Base *message = check_and_cast<CustomMessage_Base *>(msg);
 
-    // expected message
-    double ee = uniform(0, 1);
-    bool is_lost = ( ee <= LP);
-    if (message->getHeader() == seq_num)
+    bool is_lost = (uniform(0, 1) <= LP);
+    // expected message??
+    if (message->getHeader() == expected_seq_num)
     {
         // no error in the message
         if (check_checksum(message))
         {
+            expected_seq_num = (expected_seq_num + 1) % (window_size + 1);
+
             unframing_message(message);
-            message->setAck_num(++seq_num);
+            message->setAck_num(expected_seq_num);
             message->setType(control_signal::ACK);
             EV << "received message: " << message->getPayload() << " --> seq_num: " << int(message->getHeader()) << std::endl;
             logger.logPayloadUploading(message->getHeader(), message->getPayload());
-            logger.logControlFrameSending(1, true, seq_num, is_lost);
+            logger.logControlFrameSending(getIndex(), true, expected_seq_num, is_lost);
 
             if (!is_lost)
                 sendDelayed(message, TD, "out");
@@ -112,17 +114,15 @@ void Node::handleMessage_receiver(cMessage *msg)
                 EV_ERROR << "ACK will be lost" << std::endl;
 
             // if the window is full, reset the seq_num
-            if (seq_num == window_size + 1)
-                seq_num = 0;
         }
         // error in the message
         else
-        {`````````
-            EV_ERROR << "there is error in the received message -->"
+        {
+            EV_ERROR << "There is error in the received message -->"
                      << " seq_num: " << int(message->getHeader()) << std::endl;
-            message->setAck_num(seq_num);
+            message->setAck_num(expected_seq_num);
             message->setType(control_signal::NACK);
-            logger.logControlFrameSending(1, false, seq_num, is_lost);
+            logger.logControlFrameSending(getIndex(), false, expected_seq_num, is_lost);
             if (!is_lost)
                 sendDelayed(message, TD, "out");
             else
@@ -131,6 +131,26 @@ void Node::handleMessage_receiver(cMessage *msg)
     }
     else
         EV_ERROR << "received unexpected message with seq_num: " << int(message->getHeader()) << std::endl;
+}
+
+int Node::ack_distance_from_start(int ack_num)
+{
+    int max_seq_num = window_size + 1;
+    int win_start = (w_start + 1) % (max_seq_num);
+    int win_end = (w_end + 1) % (max_seq_num);
+    // 1 2 3
+    if ((win_start <= win_end && ack_num >= win_start && ack_num <= win_end) ||
+        (win_start > win_end && (ack_num >= win_start || ack_num <= win_end)))
+    {
+        // ACK is within the window
+        int distance = (ack_num - (win_start - 1) + max_seq_num) % max_seq_num;
+        return distance;
+    }
+    else
+    {
+        // ACK is not within the window
+        return -1;
+    }
 }
 
 // sender member functions
@@ -144,7 +164,7 @@ void Node::handleMessage_sender(cMessage *msg)
 
         // send the frame
         int w_num = msg->getKind();
-        cancelEvent(msg);
+        // cancelEvent(msg);
         // send the frame with the corresponding error
         send_message_with_error(messages[w_num], w_num % (window_size + 1));
         // schedule a timeout for the frame
@@ -162,7 +182,7 @@ void Node::handleMessage_sender(cMessage *msg)
         // this is a timeout on the first frame in the window
         // resend all frames in the window
         EV << "timeout\n";
-        logger.logTimeoutEvent(0, msg->getKind() % (window_size + 1));
+        logger.logTimeoutEvent(getIndex(), msg->getKind() % (window_size + 1));
         reset_window();
         is_processing = false; // we are not processing any frame now
     }
@@ -178,20 +198,28 @@ void Node::handleMessage_sender(cMessage *msg)
             EV << "ACK in sender\n";
             // this is an ACK
             int ack_num = message->getAck_num();
-            // a correct ACK should havee the second frame's seqNum in the window
-            if (ack_num != (w_start % (window_size + 1)) + 1)
-                return; // this is a wrong ACK
+            // a correct ACK should have a future num in the seq
+            // TODO: implement in between function OR
+            int d_ack = ack_distance_from_start(ack_num);
+            if (d_ack < 0)
+            {
+                return;
+            }
+
+            // if (ack_num < ((w_start + 1) % (window_size + 1)))
+            //     return; // this is a wrong ACK
 
             EV << "RECEIVED CORRECT ACK with ack_num: " << int(ack_num) << std::endl;
             // slide the window
-            w_start++;
+            w_start += d_ack;
             // update the end of the window if it is not the last frame
-            w_end = (w_end == messages.size() - 1) ? w_end : w_end + 1;
+            w_end = (w_end + d_ack > messages.size() - 1) ? messages.size() - 1 : w_end + d_ack;
 
             // TODO: delete from the timeouts vector
             // frame is in order so we can delete the timeout
             cancelAndDelete(timeouts[0]);
             timeouts.erase(timeouts.begin());
+
             // if the sender is proceessing some frame then we can't send more frames now
             if (is_processing)
                 return; // the frame will be sent when it finishes processing ISA
@@ -201,14 +229,11 @@ void Node::handleMessage_sender(cMessage *msg)
             EV << "NACK in sender\n";
             // check if the NACK is for the first frame in the window or not
             int nack_num = message->getAck_num();
-            if (nack_num != w_start % window_size)
+            if (nack_num != w_start % (window_size + 1))
                 return; // this is a wrong NACK
 
             EV << "NACK with nack_num: " << int(message->getAck_num()) << std::endl;
-
-            if (is_processing)
-                // make it stop processing the current frame and Resend the frame that caused the NACK
-                cancelAndDelete(to_proccessing_msg);
+            reset_window();
         }
     }
 
@@ -310,4 +335,8 @@ void Node::reset_window()
         cancelAndDelete(timeouts[i]);
     }
     timeouts.clear(); // clear the timeouts vector
+
+    if (is_processing)
+        // make it stop processing the current frame and Resend the frame that caused the NACK or the timeout
+        cancelAndDelete(to_proccessing_msg);
 }

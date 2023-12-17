@@ -30,7 +30,7 @@ class Node : public cSimpleModule
 private:
   // ------------------------ receiver members ------------------------
   float LP;
-  char seq_num;
+  char expected_seq_num;
 
   // ------------------------ sender members ------------------------
   float PT;
@@ -63,6 +63,7 @@ protected:
   void handleMessage_sender(cMessage *msg);
   void send_message_with_error(ErroredMsg message, char seq_num);
   void reset_window();
+  int ack_distance_from_start(int ack_num);
   // node member functions
   virtual void initialize() override;
   virtual void handleMessage(cMessage *msg) override;
