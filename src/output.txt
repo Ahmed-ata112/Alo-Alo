@@ -11,85 +11,118 @@ Uploading payload=[is a wooden chordophone (string instrument)] and seq_num=[1] 
 At time [4.500000] Node[0] Sending [ACK] with number [2] with loss [NO].
 At time [5.000000] starting processing, Node[0], Introducing channel error with code [0110].
 At time [5.500000] starting sending frame with seq_num=[3] and payload=[Most violins have a hollow wooden body.] and trailer=[-16], Modified [-1], Lost [Yes], Duplicate [1] ,  Delay [0].
-At time [5.500000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [6.000000] starting sending frame with seq_num=[0] and payload=[It is the smallest and thus highest-pitched instrument] and trailer=[-34], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [5.500000] starting processing, Node[0], Introducing channel error with code [1111].
+At time [6.000000] starting sending frame with seq_num=[0] and payload=[It is the smallest and thus highest-pitched i~strument] and trailer=[-34], Modified [364], Lost [Yes], Duplicate [1] ,  Delay [4].
 Time out event at time [14.000000], at Node[1] for frame with seq_num=[2].
 At time [14.000000] starting processing, Node[0], Introducing channel error with code [0000].
 At time [14.500000] starting sending frame with seq_num=[2] and payload=[in the violin family.] and trailer=[-126], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
 At time [14.500000] starting processing, Node[0], Introducing channel error with code [0110].
 At time [15.000000] starting sending frame with seq_num=[3] and payload=[Most violins have a hollow wooden body.] and trailer=[-16], Modified [-1], Lost [Yes], Duplicate [1] ,  Delay [0].
-At time [15.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [15.000000] starting processing, Node[0], Introducing channel error with code [1111].
 Uploading payload=[in the violin family.] and seq_num=[2] to the network layer.
 At time [15.500000] Node[0] Sending [ACK] with number [3] with loss [NO].
-At time [15.500000] starting sending frame with seq_num=[0] and payload=[It is the smallest and thus highest-pitched instrument] and trailer=[-34], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [16.500000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [17.000000] starting sending frame with seq_num=[1] and payload=[(soprano) in the family in regular use.] and trailer=[-40], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [15.500000] starting sending frame with seq_num=[0] and payload=[It is the smallest and thus h)ghest-pitched instrument] and trailer=[-34], Modified [238], Lost [Yes], Duplicate [1] ,  Delay [4].
+At time [16.500000] starting processing, Node[0], Introducing channel error with code [1111].
+At time [17.000000] starting sending frame with seq_num=[1] and payload=[(soprano) in the0family in regular use.] and trailer=[-40], Modified [132], Lost [Yes], Duplicate [1] ,  Delay [4].
 Time out event at time [25.000000], at Node[1] for frame with seq_num=[3].
 At time [25.000000] starting processing, Node[0], Introducing channel error with code [0000].
 At time [25.500000] starting sending frame with seq_num=[3] and payload=[Most violins have a hollow wooden body.] and trailer=[-16], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [25.500000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [26.000000] starting sending frame with seq_num=[0] and payload=[It is the smallest and thus highest-pitched instrument] and trailer=[-34], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [26.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [25.500000] starting processing, Node[0], Introducing channel error with code [1111].
+At time [26.000000] starting sending frame with seq_num=[0] and payload=[It is the smallest and thus highes|-pitched instrument] and trailer=[-34], Modified [275], Lost [Yes], Duplicate [1] ,  Delay [4].
+At time [26.000000] starting processing, Node[0], Introducing channel error with code [1111].
 Uploading payload=[Most violins have a hollow wooden body.] and seq_num=[3] to the network layer.
 At time [26.500000] Node[0] Sending [ACK] with number [0] with loss [NO].
-At time [26.500000] starting sending frame with seq_num=[1] and payload=[(soprano) in the family in regular use.] and trailer=[-40], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [26.500000] starting sending frame with seq_num=[1] and payload=[(soprano) iî the family in regular use.] and trailer=[-40], Modified [95], Lost [Yes], Duplicate [1] ,  Delay [4].
+At time [27.500000] starting processing, Node[0], Introducing channel error with code [1111].
+At time [28.000000] starting sending frame with seq_num=[2] and payload=[[aÝ The violin typically has four strings,] and trailer=[-117], Modified [23], Lost [Yes], Duplicate [1] ,  Delay [4].
+Time out event at time [36.000000], at Node[1] for frame with seq_num=[0].
+At time [36.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [36.500000] starting sending frame with seq_num=[0] and payload=[It is the smallest and thus highest-pitched instrument] and trailer=[-34], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [36.500000] starting processing, Node[0], Introducing channel error with code [1111].
+At time [37.000000] starting sending frame with seq_num=[1] and payload=[(soprano) an the family in regular use.] and trailer=[-40], Modified [83], Lost [Yes], Duplicate [1] ,  Delay [4].
+At time [37.000000] starting processing, Node[0], Introducing channel error with code [1111].
 Uploading payload=[It is the smallest and thus highest-pitched instrument] and seq_num=[0] to the network layer.
-At time [27.000000] Node[0] Sending [ACK] with number [1] with loss [NO].
-At time [27.500000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [37.500000] Node[0] Sending [ACK] with number [1] with loss [NO].
+At time [37.500000] starting sending frame with seq_num=[2] and payload=[[a] The violin typically has four`strings,] and trailer=[-117], Modified [270], Lost [Yes], Duplicate [1] ,  Delay [4].
+At time [38.500000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [39.000000] starting sending frame with seq_num=[3] and payload=[(some can have five$), u{ually tuned in perfect] and trailer=[-10], Modified [195], Lost [NO], Duplicate [0] ,  Delay [0].
+Time out event at time [47.000000], at Node[1] for frame with seq_num=[1].
+At time [47.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [47.500000] starting sending frame with seq_num=[1] and payload=[(soprano) in the family in regular use.] and trailer=[-40], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [47.500000] starting processing, Node[0], Introducing channel error with code [1111].
+At time [48.000000] starting sending frame with seq_num=[2] and payload=[[a] The violin tùpically has four strings,] and trailer=[-117], Modified [135], Lost [Yes], Duplicate [1] ,  Delay [4].
+At time [48.000000] starting processing, Node[0], Introducing channel error with code [1000].
 Uploading payload=[(soprano) in the family in regular use.] and seq_num=[1] to the network layer.
-At time [27.500000] Node[0] Sending [ACK] with number [2] with loss [NO].
-At time [28.000000] starting sending frame with seq_num=[2] and payload=[[a] The violin typically has four strings,] and trailer=[-117], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [28.000000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [28.500000] starting sending frame with seq_num=[3] and payload=[(some can have five/$), usually tuned in perfect] and trailer=[-10], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [28.500000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [48.500000] Node[0] Sending [ACK] with number [2] with loss [NO].
+At time [48.500000] starting sending frame with seq_num=[3] and payload=[(soie can have five$), usually tuned in perfect] and trailer=[-10], Modified [26], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [49.500000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [50.000000] starting sending frame with seq_num=[0] and payload=[fifths with notes G3,!D4, A4, E5,] and trailer=[-103], Modified [168], Lost [NO], Duplicate [0] ,  Delay [0].
+Time out event at time [58.000000], at Node[1] for frame with seq_num=[2].
+At time [58.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [58.500000] starting sending frame with seq_num=[2] and payload=[[a] The violin typically has four strings,] and trailer=[-117], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [58.500000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [59.000000] starting sending frame with seq_num=[3] and payload=[(some can have five$), usually tuned in perfect] and trailer=[-10], Modified [319], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [59.000000] starting processing, Node[0], Introducing channel error with code [1000].
 Uploading payload=[[a] The violin typically has four strings,] and seq_num=[2] to the network layer.
-At time [29.000000] Node[0] Sending [ACK] with number [3] with loss [NO].
-At time [29.000000] starting sending frame with seq_num=[0] and payload=[fifths with notes G3, D4, A4, E5,] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [59.500000] Node[0] Sending [ACK] with number [3] with loss [NO].
+At time [59.500000] starting sending frame with seq_num=[0] and payload=[fift(s with notes G3, D4, A4, E5,] and trailer=[-103], Modified [38], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [60.000000] Node[0] Sending [NACK] with number [3] with loss [NO].
+At time [60.500000] starting processing, Node[0], Introducing channel error with code [0100].
+At time [61.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [61.500000] starting sending frame with seq_num=[3] and payload=[(some can have five/$), usually tuned in perfect] and trailer=[-10], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [61.500000] starting processing, Node[0], Introducing channel error with code [1000].
+At time [62.000000] starting sending frame with seq_num=[0] and payload=[fifths with not%s G3, D4, A4, E5,] and trailer=[-103], Modified [126], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [62.000000] starting processing, Node[0], Introducing channel error with code [0100].
 Uploading payload=[(some can have five$), usually tuned in perfect] and seq_num=[3] to the network layer.
-At time [29.500000] Node[0] Sending [ACK] with number [0] with loss [NO].
-At time [30.000000] starting processing, Node[0], Introducing channel error with code [0100].
+At time [62.500000] Node[0] Sending [ACK] with number [0] with loss [NO].
+At time [62.500000] starting sending frame with seq_num=[1] and payload=[and is most commonly played by drawing] and trailer=[-19], Modified [-1], Lost [Yes], Duplicate [0] ,  Delay [0].
+At time [63.000000] Node[0] Sending [NACK] with number [0] with loss [NO].
+At time [63.500000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [64.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [64.500000] starting sending frame with seq_num=[0] and payload=[fifths with notes G3, D4, A4, E5,] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [64.500000] starting processing, Node[0], Introducing channel error with code [0100].
+At time [65.000000] starting sending frame with seq_num=[1] and payload=[and is most commonly played by drawing] and trailer=[-19], Modified [-1], Lost [Yes], Duplicate [0] ,  Delay [0].
+At time [65.000000] starting processing, Node[0], Introducing channel error with code [0000].
 Uploading payload=[fifths with notes G3, D4, A4, E5,] and seq_num=[0] to the network layer.
-At time [30.000000] Node[0] Sending [ACK] with number [1] with loss [NO].
-At time [30.500000] starting sending frame with seq_num=[1] and payload=[and is most commonly played by drawing] and trailer=[-19], Modified [-1], Lost [Yes], Duplicate [0] ,  Delay [0].
-At time [30.500000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [31.000000] starting sending frame with seq_num=[2] and payload=[a bow across its strings.] and trailer=[-35], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [31.000000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [31.500000] starting sending frame with seq_num=[3] and payload=[It can also be played by plucking] and trailer=[-89], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-Time out event at time [40.500000], at Node[1] for frame with seq_num=[1].
-At time [40.500000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [41.000000] starting sending frame with seq_num=[1] and payload=[and is most commonly played by drawing] and trailer=[-19], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [41.000000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [41.500000] starting sending frame with seq_num=[2] and payload=[a bow across its strings.] and trailer=[-35], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [41.500000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [65.500000] Node[0] Sending [ACK] with number [1] with loss [NO].
+At time [65.500000] starting sending frame with seq_num=[2] and payload=[a bow across its strings.] and trailer=[-35], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [66.500000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [67.000000] starting sending frame with seq_num=[3] and payload=[It can also be played by plucking] and trailer=[-89], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+Time out event at time [75.000000], at Node[1] for frame with seq_num=[1].
+At time [75.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [75.500000] starting sending frame with seq_num=[1] and payload=[and is most commonly played by drawing] and trailer=[-19], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [75.500000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [76.000000] starting sending frame with seq_num=[2] and payload=[a bow across its strings.] and trailer=[-35], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [76.000000] starting processing, Node[0], Introducing channel error with code [0000].
 Uploading payload=[and is most commonly played by drawing] and seq_num=[1] to the network layer.
-At time [42.000000] Node[0] Sending [ACK] with number [2] with loss [NO].
-At time [42.000000] starting sending frame with seq_num=[3] and payload=[It can also be played by plucking] and trailer=[-89], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [76.500000] Node[0] Sending [ACK] with number [2] with loss [NO].
+At time [76.500000] starting sending frame with seq_num=[3] and payload=[It can also be played by plucking] and trailer=[-89], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
 Uploading payload=[a bow across its strings.] and seq_num=[2] to the network layer.
-At time [42.500000] Node[0] Sending [ACK] with number [3] with loss [NO].
-At time [43.000000] starting processing, Node[0], Introducing channel error with code [1001].
+At time [77.000000] Node[0] Sending [ACK] with number [3] with loss [NO].
+At time [77.500000] starting processing, Node[0], Introducing channel error with code [1001].
 Uploading payload=[It can also be played by plucking] and seq_num=[3] to the network layer.
-At time [43.000000] Node[0] Sending [ACK] with number [0] with loss [NO].
-At time [43.500000] starting sending frame with seq_num=[0] and payload=[the strings$ wi|h the fingers (pizzicato)] and trailer=[-70], Modified [123], Lost [NO], Duplicate [0] ,  Delay [4].
-At time [43.500000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [44.000000] starting sending frame with seq_num=[1] and payload=[and, in specialized cases, by striking] and trailer=[-85], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [44.000000] starting processing, Node[0], Introducing channel error with code [0010].
-At time [44.500000] starting sending frame with seq_num=[2] and payload=[the strings with the wooden side/$ of the bow] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [1] ,  Delay [0].
-At time [44.500000] starting sending frame with seq_num=[2] and payload=[the strings with the wooden side/$ of the bow] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [2] ,  Delay [0].
-At time [48.500000] Node[0] Sending [NACK] with number [0] with loss [NO].
-At time [49.500000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [50.000000] starting sending frame with seq_num=[0] and payload=[the strings/$ with the fingers (pizzicato)] and trailer=[-70], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [50.000000] starting processing, Node[0], Introducing channel error with code [0000].
-At time [50.500000] starting sending frame with seq_num=[1] and payload=[and, in specialized cases, by striking] and trailer=[-85], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
-At time [50.500000] starting processing, Node[0], Introducing channel error with code [0010].
+At time [77.500000] Node[0] Sending [ACK] with number [0] with loss [NO].
+At time [78.000000] starting sending frame with seq_num=[0] and payload=[the strings$ with the fkngers (pizzicato)] and trailer=[-70], Modified [185], Lost [NO], Duplicate [0] ,  Delay [4].
+At time [78.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [78.500000] starting sending frame with seq_num=[1] and payload=[and, in specialized cases, by striking] and trailer=[-85], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [78.500000] starting processing, Node[0], Introducing channel error with code [0010].
+At time [79.000000] starting sending frame with seq_num=[2] and payload=[the strings with the wooden side/$ of the bow] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [1] ,  Delay [0].
+At time [79.000000] starting sending frame with seq_num=[2] and payload=[the strings with the wooden side/$ of the bow] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [2] ,  Delay [0].
+At time [83.000000] Node[0] Sending [NACK] with number [0] with loss [NO].
+At time [84.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [84.500000] starting sending frame with seq_num=[0] and payload=[the strings/$ with the fingers (pizzicato)] and trailer=[-70], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [84.500000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [85.000000] starting sending frame with seq_num=[1] and payload=[and, in specialized cases, by striking] and trailer=[-85], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [85.000000] starting processing, Node[0], Introducing channel error with code [0010].
 Uploading payload=[the strings$ with the fingers (pizzicato)] and seq_num=[0] to the network layer.
-At time [51.000000] Node[0] Sending [ACK] with number [1] with loss [NO].
-At time [51.000000] starting sending frame with seq_num=[2] and payload=[the strings with the wooden side/$ of the bow] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [1] ,  Delay [0].
-At time [51.000000] starting sending frame with seq_num=[2] and payload=[the strings with the wooden side/$ of the bow] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [2] ,  Delay [0].
+At time [85.500000] Node[0] Sending [ACK] with number [1] with loss [NO].
+At time [85.500000] starting sending frame with seq_num=[2] and payload=[the strings with the wooden side/$ of the bow] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [1] ,  Delay [0].
+At time [85.500000] starting sending frame with seq_num=[2] and payload=[the strings with the wooden side/$ of the bow] and trailer=[-103], Modified [-1], Lost [NO], Duplicate [2] ,  Delay [0].
 Uploading payload=[and, in specialized cases, by striking] and seq_num=[1] to the network layer.
-At time [51.500000] Node[0] Sending [ACK] with number [2] with loss [NO].
-At time [52.000000] starting processing, Node[0], Introducing channel error with code [0000].
+At time [86.000000] Node[0] Sending [ACK] with number [2] with loss [NO].
+At time [86.500000] starting processing, Node[0], Introducing channel error with code [0000].
 Uploading payload=[the strings with the wooden side$ of the bow] and seq_num=[2] to the network layer.
-At time [52.000000] Node[0] Sending [ACK] with number [3] with loss [NO].
-At time [52.500000] starting sending frame with seq_num=[3] and payload=[(col legno).] and trailer=[-1], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
+At time [86.500000] Node[0] Sending [ACK] with number [3] with loss [NO].
+At time [87.000000] starting sending frame with seq_num=[3] and payload=[(col legno).] and trailer=[-1], Modified [-1], Lost [NO], Duplicate [0] ,  Delay [0].
 Uploading payload=[(col legno).] and seq_num=[3] to the network layer.
-At time [53.500000] Node[0] Sending [ACK] with number [0] with loss [NO].
+At time [88.000000] Node[0] Sending [ACK] with number [0] with loss [NO].

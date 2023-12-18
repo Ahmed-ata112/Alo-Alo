@@ -136,8 +136,8 @@ void Node::handleMessage_receiver(cMessage *msg)
 int Node::ack_distance_from_start(int ack_num, bool is_nack = false)
 {
     int max_seq_num = window_size + 1;
-    int win_start = (w_start + is_nack ? 0 : 1) % (max_seq_num);
-    int win_end = (w_end + is_nack ? 0 : 1) % (max_seq_num);
+    int win_start = (w_start +( is_nack ? 0 : 1)) % (max_seq_num);
+    int win_end = (w_end + (is_nack ? 0 : 1)) % (max_seq_num);
     // 1 2 3
     if ((win_start <= win_end && ack_num >= win_start && ack_num <= win_end) ||
         (win_start > win_end && (ack_num >= win_start || ack_num <= win_end)))
