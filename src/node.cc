@@ -145,7 +145,8 @@ void Node::handleMessage_receiver(cMessage *msg)
                 EV_ERROR << "NACK will be lost" << std::endl;
         }
     }
-    else if (n_msgs_received == n_messages)
+    // out of order message -> send Ack with the needed frame
+    else
     {
         // I already received all messages
         // send an ack for all the messages
@@ -157,10 +158,7 @@ void Node::handleMessage_receiver(cMessage *msg)
             sendDelayed(message, TD, "out");
         else
             EV_ERROR << "ACK will be lost" << std::endl;
-            
     }
-    else
-        EV_ERROR << "received unexpected message with seq_num: " << int(message->getHeader()) << std::endl;
 }
 
 int Node::ack_distance_from_start(int ack_num, bool is_nack = false)
