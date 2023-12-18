@@ -27,6 +27,7 @@ void Node::initialize()
     // -------------------------receiver----------------------------
     LP = par("LP").doubleValue();
     expected_seq_num = 0;
+    n_msgs_received = 0;
     // ------------------------ sender -----------------------------
     TO = par("TO").doubleValue();
     PT = par("PT").doubleValue();
@@ -59,11 +60,18 @@ void Node::handleMessage(cMessage *msg)
         // read from the file and load messages
         std::string file = std::to_string(getIndex());
         messages = readfile("input" + file + ".txt");
+        n_messages = messages.size();
         EV << "messages size: " << messages.size() << "\n";
         EV << "Started processing frame with num: " << w_next << "\n";
         EV << "w_next: " << w_next << "\n";
         EV << "w_start: " << w_start << "\n";
         EV << "w_end: " << w_end << "\n";
+
+        // send a message that have the n_messages to the reciever
+        cMessage *count_message = new cMessage("num_msgs_msg");
+        // sed num off messages to the reciever
+        count_message->setKind(n_messages);
+        sendDelayed(count_message, TD, "out");
 
         logger.logProcessingStart(0, messages[w_next].get_error_code());
         // send the message at the first begining
@@ -89,7 +97,14 @@ void Node::handleMessage(cMessage *msg)
 // receiver member functions
 void Node::handleMessage_receiver(cMessage *msg)
 {
-    // TODO - Generated method body
+    // we receive the n_msgs at first
+    if (string(msg->getName()) == "num_msgs_msg")
+    {
+        n_messages = msg->getKind();
+        EV << "n_messages at reciever: " << n_messages << "\n";
+        return;
+    }
+
     CustomMessage_Base *message = check_and_cast<CustomMessage_Base *>(msg);
 
     bool is_lost = (uniform(0, 1) <= LP);
@@ -99,6 +114,7 @@ void Node::handleMessage_receiver(cMessage *msg)
         // no error in the message
         if (check_checksum(message))
         {
+            n_msgs_received++;
             expected_seq_num = (expected_seq_num + 1) % (window_size + 1);
 
             unframing_message(message);
@@ -129,6 +145,20 @@ void Node::handleMessage_receiver(cMessage *msg)
                 EV_ERROR << "NACK will be lost" << std::endl;
         }
     }
+    else if (n_msgs_received == n_messages)
+    {
+        // I already received all messages
+        // send an ack for all the messages
+        message->setAck_num(expected_seq_num);
+        message->setType(control_signal::ACK);
+        logger.logControlFrameSending(getIndex(), true, expected_seq_num, is_lost);
+
+        if (!is_lost)
+            sendDelayed(message, TD, "out");
+        else
+            EV_ERROR << "ACK will be lost" << std::endl;
+            
+    }
     else
         EV_ERROR << "received unexpected message with seq_num: " << int(message->getHeader()) << std::endl;
 }
@@ -136,7 +166,7 @@ void Node::handleMessage_receiver(cMessage *msg)
 int Node::ack_distance_from_start(int ack_num, bool is_nack = false)
 {
     int max_seq_num = window_size + 1;
-    int win_start = (w_start +( is_nack ? 0 : 1)) % (max_seq_num);
+    int win_start = (w_start + (is_nack ? 0 : 1)) % (max_seq_num);
     int win_end = (w_end + (is_nack ? 0 : 1)) % (max_seq_num);
     // 1 2 3
     if ((win_start <= win_end && ack_num >= win_start && ack_num <= win_end) ||

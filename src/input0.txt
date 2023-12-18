@@ -1,7 +1,2 @@
-1010 A flower, sometimes 
-1100 known as a bloom or blossom in flowering plants
-0110 is the reproductive$ structure found  also called/ angiosperms$).
-0100 (plants of the division Magnoliophyta,  is to facilitate reproduction,
-0101 The biological function of $/a flower  
-0110 usually by providing a mechanism for Flowers may facilitate outcrossing$
-0111 $$the union of sperm with eggs.
+0000 A
+0000 B

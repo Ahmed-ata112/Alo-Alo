@@ -31,7 +31,7 @@ private:
   // ------------------------ receiver members ------------------------
   float LP;
   char expected_seq_num;
-
+  int n_msgs_received;
   // ------------------------ sender members ------------------------
   float PT;
   float ED;
@@ -53,6 +53,7 @@ private:
   // ------------------------ both ------------------------
   float TD;
   int window_size;
+  int n_messages;
   Logger logger;
   bool is_receiver; // initially is true
 
