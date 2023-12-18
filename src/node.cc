@@ -67,12 +67,6 @@ void Node::handleMessage(cMessage *msg)
         EV << "w_start: " << w_start << "\n";
         EV << "w_end: " << w_end << "\n";
 
-        // send a message that have the n_messages to the reciever
-        cMessage *count_message = new cMessage("num_msgs_msg");
-        // sed num off messages to the reciever
-        count_message->setKind(n_messages);
-        sendDelayed(count_message, TD, "out");
-
         logger.logProcessingStart(0, messages[w_next].get_error_code());
         // send the message at the first begining
         to_proccessing_msg = new cMessage("to_proccessing_msg");
@@ -97,14 +91,6 @@ void Node::handleMessage(cMessage *msg)
 // receiver member functions
 void Node::handleMessage_receiver(cMessage *msg)
 {
-    // we receive the n_msgs at first
-    if (string(msg->getName()) == "num_msgs_msg")
-    {
-        n_messages = msg->getKind();
-        EV << "n_messages at reciever: " << n_messages << "\n";
-        return;
-    }
-
     CustomMessage_Base *message = check_and_cast<CustomMessage_Base *>(msg);
 
     bool is_lost = (uniform(0, 1) <= LP);
@@ -114,9 +100,7 @@ void Node::handleMessage_receiver(cMessage *msg)
         // no error in the message
         if (check_checksum(message))
         {
-            n_msgs_received++;
             expected_seq_num = (expected_seq_num + 1) % (window_size + 1);
-
             unframing_message(message);
             message->setAck_num(expected_seq_num);
             message->setType(control_signal::ACK);
