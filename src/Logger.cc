@@ -18,7 +18,7 @@
 #include <fstream>
 #include <omnetpp.h>
 #include <iostream>
-
+#include <bitset>
 using namespace omnetpp;
 
 using namespace std;
@@ -63,7 +63,7 @@ void Logger::logFrameTransmission(int node_id, int seq_num,
     //          << "] and payload=[" << payload << "] and trailer=[" << (int)trailer << "], Modified ["
     //          << modified << "], Lost [" << (lost ? "Yes" : "NO") << "], Duplicate [" << dup << "] ,  Delay [" << delay << "]." << endl;
 
-    string msg = "At time [" + std::to_string(simTime().dbl()) + "] starting sending frame with seq_num=[" + std::to_string(seq_num) + "] and payload=[" + payload + "] and trailer=[" + std::to_string(trailer) + "], Modified [" + std::to_string(modified) + "], Lost [" + (lost ? "Yes" : "NO") + "], Duplicate [" + std::to_string(dup) + "] ,  Delay [" + std::to_string(delay) + "].";
+    string msg = "At time [" + std::to_string(simTime().dbl()) + "] starting sending frame with seq_num=[" + std::to_string(seq_num) + "] and payload=[" + payload + "] and trailer=[" + std::bitset<8>(trailer).to_string() + "], Modified [" + std::to_string(modified) + "], Lost [" + (lost ? "Yes" : "NO") + "], Duplicate [" + std::to_string(dup) + "] ,  Delay [" + std::to_string(delay) + "].";
     EV << msg << endl;
     log_file << msg << endl;
     log_file.close();
@@ -86,7 +86,7 @@ void Logger::logControlFrameSending(int node_id, bool ack_nack, int ack_num, boo
 
     // log_file << "At time [" << (simTime().dbl()) << "] Node[" << node_id << "] Sending [" << (ack_nack ? "ACK" : "NACK") << "] with loss [" << (loss ? "YES" : "NO") << "].";
 
-    string msg = "At time [" + std::to_string(simTime().dbl()) + "] Node[" + std::to_string(node_id) + "] Sending [" + (ack_nack ? "ACK" : "NACK") + "] with number [" + std::to_string(ack_num )+ "] with loss [" + (loss ? "YES" : "NO") + "].";
+    string msg = "At time [" + std::to_string(simTime().dbl()) + "] Node[" + std::to_string(node_id) + "] Sending [" + (ack_nack ? "ACK" : "NACK") + "] with number [" + std::to_string(ack_num) + "] with loss [" + (loss ? "YES" : "NO") + "].";
     EV << msg << endl;
     log_file << msg << endl;
 

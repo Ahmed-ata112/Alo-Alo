@@ -1,8 +1,8 @@
 version 3
-run General-0-20231218-16:42:52-44560
+run General-0-20231219-15:32:59-41560
 attr configname General
-attr datetime 20231218-16:42:52
-attr datetimef 20231218-164252
+attr datetime 20231219-15:32:59
+attr datetimef 20231219-153259
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,7 +10,7 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Network
-attr processid 44560
+attr processid 41560
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -23,7 +23,7 @@ config Network.*.PT 0.5
 config Network.*.TD 1.0
 config Network.*.ED 5.0
 config Network.*.DD 0.1
-config Network.*.LP 0.8
+config Network.*.LP 0.1
 
 par Network.node[0] typename "\"alo_alo.Node\""
 par Network.node[0] WS 3
@@ -32,7 +32,7 @@ par Network.node[0] PT 0.5
 par Network.node[0] TD 1
 par Network.node[0] ED 5
 par Network.node[0] DD 0.1
-par Network.node[0] LP 0.8
+par Network.node[0] LP 0.1
 par Network.node[1] typename "\"alo_alo.Node\""
 par Network.node[1] WS 3
 par Network.node[1] TO 10
@@ -40,7 +40,7 @@ par Network.node[1] PT 0.5
 par Network.node[1] TD 1
 par Network.node[1] ED 5
 par Network.node[1] DD 0.1
-par Network.node[1] LP 0.8
+par Network.node[1] LP 0.1
 par Network.coordinator typename "\"alo_alo.Coordinator\""
 par Network typename "\"alo_alo.Network\""
 
