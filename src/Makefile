@@ -38,8 +38,6 @@ OBJS = \
     $O/ErroredMsg.o \
     $O/Logger.o \
     $O/node.o \
-    $O/receiver.o \
-    $O/sender.o \
     $O/utilities.o \
     $O/CustomMessage_m.o
 
