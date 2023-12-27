@@ -320,14 +320,16 @@ void Node::send_message_with_error(ErroredMsg message, char seq_num)
     int bit;
     if (message.is_modified())
     {
+        string framed_payload = msg->getPayload();
         // generate random index for character in payload
-        index = int(uniform(0, size));
+        index = int(uniform(0, framed_payload.size()));
         // generate random bit to flip in character
         bit = uniform(0, 8);
         // flip the bit
-        message.payload[index] ^= (1 << bit);
+        /*message.payload[index] ^= (1 << bit); this is a wrong line because we must flip the bit after framing not before*/
+        framed_payload[index] ^= (1 << (8 - bit));
         // set the payload again
-        msg->setPayload(message.payload.c_str());
+        msg->setPayload(framed_payload.c_str());
     }
 
     // send the original message
