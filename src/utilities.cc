@@ -32,6 +32,7 @@ void frame_message(CustomMessage_Base *msg)
             framed_payload.push_back('/');
         framed_payload.push_back(payload[i]);
     }
+    framed_payload = "$" + framed_payload + "$";
     msg->setPayload(framed_payload.c_str());
 }
 
@@ -53,7 +54,7 @@ void unframing_message(CustomMessage_Base *msg)
     string payload = msg->getPayload();
     string unframed_payload = "";
     int size = payload.size();
-    for (int i = 0; i < size; i++)
+    for (int i = 1; i < size - 1; i++)
     {
         if (payload[i] == '/' && payload[i + 1] == '/')
         {
