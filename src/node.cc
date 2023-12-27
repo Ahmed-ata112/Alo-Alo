@@ -327,7 +327,7 @@ void Node::send_message_with_error(ErroredMsg message, char seq_num)
         bit = uniform(0, 8);
         // flip the bit
         /*message.payload[index] ^= (1 << bit); this is a wrong line because we must flip the bit after framing not before*/
-        framed_payload[index] ^= (1 << bit);
+        framed_payload[index] ^= (1 << (8 - bit));
         // set the payload again
         msg->setPayload(framed_payload.c_str());
     }
