@@ -145,7 +145,6 @@ void Node::handleMessage_receiver(cMessage *msg)
     }
 }
 
-
 int Node::ack_distance_from_start(int ack_num, bool is_nack = false)
 {
     int max_seq_num = window_size + 1;
@@ -165,7 +164,6 @@ int Node::ack_distance_from_start(int ack_num, bool is_nack = false)
         return -1;
     }
 }
-
 
 // sender member functions
 void Node::handleMessage_sender(cMessage *msg)
@@ -296,8 +294,6 @@ void Node::handleMessage_sender(cMessage *msg)
     // increment the next frame to be sent
     w_next++;
 }
-
-
 
 void Node::send_message_with_error(ErroredMsg message, char seq_num)
 {

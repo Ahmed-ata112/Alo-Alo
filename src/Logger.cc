@@ -54,7 +54,7 @@ void Logger::logProcessingStart(int node_id, string error_code)
 
 void Logger::logFrameTransmission(int node_id, int seq_num,
                                   const std::string &payload, char trailer, int modified,
-                                  bool lost, int dup, int delay)
+                                  bool lost, int dup, float delay)
 {
 
     log_file.open("output.txt", std::ios::out | std::ios::app);
