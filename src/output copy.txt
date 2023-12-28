@@ -1,6 +1,0 @@
-At time [5.000000] starting processing, Node[0], Introducing channel error with code [1010].
-At time [5.500000] starting sending frame with seq_num=[0] and payload=[A flower, cometimes ] and trailer=[-59], Modified [84], Lost [NO], Duplicate [1] ,  Delay [0].
-At time [5.500000] starting sending frame with seq_num=[0] and payload=[A flower, cometimes ] and trailer=[-59], Modified [84], Lost [NO], Duplicate [2] ,  Delay [0].
-At time [6.500000] Node[1] Sending [NACK] with number [0] with loss [NO].
-At time [6.600000] Node[1] Sending [NACK] with number [0] with loss [NO].
-Time out event at time [15.500000], at Node[0] for frame with seq_num=[0].
