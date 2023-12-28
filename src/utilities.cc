@@ -63,7 +63,8 @@ void unframing_message(CustomMessage_Base *msg)
         }
         else if (payload[i] == '/' && payload[i + 1] != '/')
             continue;
-        unframed_payload.push_back(payload[i]);
+        else
+            unframed_payload.push_back(payload[i]);
     }
     msg->setPayload(unframed_payload.c_str());
 }

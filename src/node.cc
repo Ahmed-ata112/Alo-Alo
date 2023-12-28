@@ -226,6 +226,7 @@ void Node::handleMessage_sender(cMessage *msg)
             w_start += d_ack;
             // update the end of the window if it is not the last frame
             w_end = (w_end + d_ack > messages.size() - 1) ? messages.size() - 1 : w_end + d_ack;
+            w_next = std::max(w_next, w_start);
 
             // TODO: delete from the timeouts vector
             // frame is in order so we can delete the timeout
@@ -255,6 +256,7 @@ void Node::handleMessage_sender(cMessage *msg)
             w_start += d_ack;
             // update the end of the window if it is not the last frame
             w_end = (w_end + d_ack > messages.size() - 1) ? messages.size() - 1 : w_end + d_ack;
+            w_next = std::max(w_next, w_start);
 
             // TODO: delete from the timeouts vector
             // frame is in order so we can delete the timeout
